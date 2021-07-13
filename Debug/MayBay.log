@@ -1,0 +1,3 @@
+﻿  Ham.cpp
+D:\Study\CTDL\MayBay\ThuVien.h(56,2): warning C4091: 'typedef ': ignored on left of 'NodeChuyenBay' when no variable is declared
+  MayBay.vcxproj -> D:\Study\CTDL\MayBay\Debug\MayBay.exe
