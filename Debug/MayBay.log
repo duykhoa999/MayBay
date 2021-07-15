@@ -8,6 +8,7 @@ D:\Study\CTDL\MayBay\mylib.h(91,1): warning C4005: 'XOA_CB': macro redefinition
 D:\Study\CTDL\MayBay\mylib.h(74): message : see previous definition of 'XOA_CB'
 D:\Study\CTDL\MayBay\mylib.h(92,1): warning C4005: 'XOA_HK': macro redefinition
 D:\Study\CTDL\MayBay\mylib.h(79): message : see previous definition of 'XOA_HK'
-D:\Study\CTDL\MayBay\Ham.cpp(95,40): warning C4244: 'argument': conversion from 'double' to 'short', possible loss of data
+D:\Study\CTDL\MayBay\Ham.cpp(112,40): warning C4244: 'argument': conversion from 'double' to 'short', possible loss of data
+D:\Study\CTDL\MayBay\Ham.cpp(153,6): warning C4101: 'i': unreferenced local variable
 D:\Study\CTDL\MayBay\mylib.h(118): warning C4172: returning address of local variable or temporary: S
   MayBay.vcxproj -> D:\Study\CTDL\MayBay\Debug\MayBay.exe

@@ -4,6 +4,23 @@
 
 using namespace std;
 
+void Normal() {
+	SetColor(15);
+	SetBGColor(0);
+}
+void Highlight() {
+	SetColor(8);
+	SetBGColor(7);
+}
+void Red_Highlight() {
+	SetColor(7);
+	SetBGColor(12);
+}
+void Green_Highlight() {
+	SetColor(7);
+	SetBGColor(10);
+}
+
 void fullScreen()
 {
 	system("mode con COLS=700");
@@ -37,22 +54,22 @@ void khungGiaoDien() {
 	gotoxy(WIDTH + 1, HEIGHT + 1);
 	cout << char(DOWNRIGHT);
 
-	gotoxy(2, 8);
+	gotoxy(2, 10);
 	cout << char(BELEFT);
 	for (int i = 0; i < MIDDLE_DOC; i++) {
-		gotoxy(i + 3, 8);
+		gotoxy(i + 3, 10);
 		cout << char(NGANG);
 	}
 	gotoxy(MIDDLE_DOC + 3, 0);
 	cout << char(BEUP);
-	gotoxy(MIDDLE_DOC + 3, MIDDLE_NGANG + 1);
+	gotoxy(MIDDLE_DOC + 3, MIDDLE_NGANG + 3);
 	cout << char(BERIGHT);
-	for (int i = 0; i < MIDDLE_NGANG; i++) {
+	for (int i = 0; i <= MIDDLE_NGANG + 1; i++) {
 		gotoxy(MIDDLE_DOC + 3, i + 1);
 		cout << char(DOC);
 	}
-	for (int i = 0; i < (HEIGHT - MIDDLE_NGANG) - 1; i++) {
-		gotoxy(MIDDLE_DOC + 3, i + MIDDLE_NGANG + 2);
+	for (int i = 0; i < (HEIGHT - MIDDLE_NGANG) - 2; i++) {
+		gotoxy(MIDDLE_DOC + 3, i + MIDDLE_NGANG + 4);
 		cout << char(DOC);
 	}
 	gotoxy(MIDDLE_DOC + 3, HEIGHT + 1);
@@ -100,4 +117,75 @@ void khungThongBao() {
 	gotoxy(COT, DONGDS_D - 2);
 	cout << "Thong bao";
 	veKhungNhap(DAIKHUNG, RONGKHUNG + 2, COT, DONGDS_D - 1, "");
+}
+
+void hienThongBao(string notif, string notif2, string notif3, string NoiDen) {
+	gotoxy(COT + 1, DONGDS_D);
+	cout << notif;
+
+	if (notif2 != "") {
+		gotoxy(COT + 1, DONGDS_D + 1);
+		cout << notif2;
+	}
+	if (NoiDen != "") {
+		gotoxy(COT + 1, DONGDS_D + 2);
+		cout << NoiDen;
+	}
+	if (notif3 != "") {
+		gotoxy(COT + 10, DONGDS_D + 2);
+		cout << notif3;
+	}
+	Sleep(1500);
+	Normal();
+	gotoxy(COT + 1, DONGDS_D);
+	cout << "                                                           ";
+	gotoxy(COT + 1, DONGDS_D + 1);
+	cout << "                                                           ";
+	gotoxy(COT + 1, DONGDS_D + 2);
+	cout << "                                                           ";
+}
+
+int menuDong_Prim(char td[soItem_MenuChinh][100]) {
+	Normal();
+	//system("cls");
+	khungGiaoDien();
+	int chon = 0;
+	int i;
+	for (int i = 0; i < soItem_MenuChinh; i++) {
+		gotoxy(COT, DONG + i + 1);
+		cout << td[i];
+	}
+	Highlight();
+	gotoxy(COT, DONG + chon + 1);
+	cout << td[chon];
+	char kytu;
+	do {
+		kytu = _getch();
+		if (kytu == -32)
+			kytu = _getch();
+		switch (kytu) {
+		case UP:
+			if (chon > 0) {
+				Normal();
+				gotoxy(COT, DONG + chon + 1); cout << td[chon];
+				chon--;
+				Highlight();
+				gotoxy(COT, DONG + chon + 1); 	cout << td[chon];
+			}
+			break;
+		case DOWN:
+			if (chon + 1 < soItem_MenuChinh) {
+				Normal();
+				gotoxy(COT, DONG + chon + 1);	cout << td[chon];
+				chon++;
+				Highlight();
+				gotoxy(COT, DONG + chon +1); 	cout << td[chon];
+			}
+			break;
+		case ENTER:
+			return chon + 1;
+		case ESC:
+			return 0;
+		}
+	} while (TRUE);
 }
