@@ -72,3 +72,9 @@ struct nodeHanhKhach {
 };
 typedef struct nodeHanhKhach NodeHanhKhach;
 typedef struct nodeHanhKhach* TREEHanhKhach;
+
+//Ham Giao Dien
+void khungGiaoDien();
+void fullScreen();
+void khungThongBao();
+void veKhungNhap(int dai, int rong, int posx, int posy, string source);

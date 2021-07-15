@@ -26,5 +26,8 @@
     <ClInclude Include="ThuVien.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="mylib.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
