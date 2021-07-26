@@ -3,6 +3,7 @@
 #include <string>
 
 #define MAXLIST 300
+#define MAX_INPUT 255
 
 using namespace std;
 
@@ -73,6 +74,11 @@ struct nodeHanhKhach {
 typedef struct nodeHanhKhach NodeHanhKhach;
 typedef struct nodeHanhKhach* TREEHanhKhach;
 
+struct NhapChuoi {
+	int n = 0;
+	char* data[MAX_INPUT];
+};
+
 //======Hang so GD======
 const int soItem_MenuChinh = 7;
 const int soItem_MenuMB = 4;
@@ -94,3 +100,14 @@ void hienThongBao(string notif, string notif2 = "", string notif3 = "", string N
 
 //======Menu Chon======
 int menuDong_Prim(char td[soItem_MenuChinh][100]);
+
+//======Ham Nhap======
+void NhapMA(char var[], int len);
+void NhapCHUOI(char var[], int len);
+void NhapCHUOI_SO(char var[], int len);
+void Nhap_SO(int& var, int len);
+void NhapNGAY(int& var, int len);
+void NhapTHANG(int& var, int len);
+void NhapNAM(int& var, int len);
+void NhapGIO(int& var, int len);
+void NhapPHUT(int& var, int len);

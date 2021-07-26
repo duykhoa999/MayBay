@@ -1,3 +1,4 @@
+#pragma once
 #include <iostream>
 #include <conio.h>
 #include "ThuVien.h"
@@ -22,10 +23,13 @@ int main(int argc, char** argv) {
 	while (exit) {
 		Normal();
 		system("cls");
+		char str[7];
 		chon = menuDong_Prim(tdChinh);
 		switch (chon) {
 		case 1:
 		{
+			NhapMA(str, 5);
+			cout << str;
 			hienThongBao("Chon 1", "Chon 2", "Chon 3", "Chon 4");
 			break;
 			/*QLMB(lstMB, lstCB);
