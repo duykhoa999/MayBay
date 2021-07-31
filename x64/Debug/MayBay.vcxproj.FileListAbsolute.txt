@@ -1,1 +1,2 @@
 C:\Users\anhse\source\repos\MayBay\x64\Debug\MayBay.exe
+D:\Study\CTDL\MayBay\x64\Debug\MayBay.exe

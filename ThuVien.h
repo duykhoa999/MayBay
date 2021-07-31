@@ -5,7 +5,6 @@
 
 #define MAX_INPUT 255
 #define MAXLIST 300
-<<<<<<< HEAD
 #define MAX_PAGE 35
 #define HUYCHUYEN 0
 #define CONVE 1
@@ -18,12 +17,10 @@ const int MAX_DAY = 10;
 const int MAX_DONG = 20;
 const int KC_GIO = 5;
 const int KC_GIOAM = 19;
-=======
 #define MAX_INPUT 255
 
 using namespace std;
 
->>>>>>> 735c5371a3a8aec14ce5bc3cf7c82801decc1010
 //struct may bay
 struct maybay {
 	char soHieuMayBay[20];
@@ -96,11 +93,6 @@ struct NhapChuoi {
 	char* data[MAX_INPUT];
 };
 
-struct NhapChuoi {
-	int n = 0;
-	char* data[MAX_INPUT];
-};
-
 //======Hang so GD======
 const int soItem_MenuChinh = 7;
 const int soItem_MenuMB = 4;
@@ -122,8 +114,6 @@ void hienThongBao(string notif, string notif2 = "", string notif3 = "", string N
 
 //======Menu Chon======
 int menuDong_Prim(char td[soItem_MenuChinh][100]);
-
-<<<<<<< HEAD
 
 //===========May bay===========
 int checkEmptyMB(listMB list);
@@ -156,18 +146,18 @@ int loadCB(PTRChuyenBay& lstCB, listMB list);
 //=============Xu li chuoi===========
 void NhapMA(char var[], int len);
 void NhapCHUOI(char var[], int len);
-=======
+
 //======Ham Nhap======
 void NhapMA(char var[], int len);
 void NhapCHUOI(char var[], int len);
 void NhapCHUOI_SO(char var[], int len);
->>>>>>> 735c5371a3a8aec14ce5bc3cf7c82801decc1010
+
 void Nhap_SO(int& var, int len);
 void NhapNGAY(int& var, int len);
 void NhapTHANG(int& var, int len);
 void NhapNAM(int& var, int len);
 void NhapGIO(int& var, int len);
-<<<<<<< HEAD
+
 void NhapPHUT(int& var, int len);
 char* CheckInputStr(bool nhapMa, int DongInfo);
 int CheckInputNum(int DongInfo);
@@ -183,6 +173,6 @@ int confirm(string chose1, string chose2, bool huyCB);
 
 //======================Giao dien menu==========
 mayBay ChonMB_LapCB(listMB list);
-=======
+
 void NhapPHUT(int& var, int len);
->>>>>>> 735c5371a3a8aec14ce5bc3cf7c82801decc1010
+

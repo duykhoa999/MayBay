@@ -191,8 +191,6 @@ int menuDong_Prim(char td[soItem_MenuChinh][100]) {
 	} while (TRUE);
 }
 
-<<<<<<< HEAD
-
 
 //=====================May bay================
 /**
@@ -805,11 +803,7 @@ int checkTimeHienTai(THOI_GIAN tg) {
 
 //======================Quan li ve============
 
-
-//==================Xu li chuoi=============================
-void NhapMA(char var[], int len) {
-=======
-//========== Xu Ly Nhap ===========
+//========== xu ly nhap chuoi ===========
 void NhapMA(char var[], int len) {
 	int maxInput = len;
 	if (maxInput == 0)
@@ -864,7 +858,6 @@ void NhapMA(char var[], int len) {
 }
 
 void NhapCHUOI(char var[], int len) {
->>>>>>> 735c5371a3a8aec14ce5bc3cf7c82801decc1010
 	int maxInput = len;
 	if (maxInput == 0)
 		maxInput = MAX_INPUT;
@@ -876,14 +869,6 @@ void NhapCHUOI(char var[], int len) {
 	while (true) {
 		if (_kbhit()) {
 			char c = _getch();
-<<<<<<< HEAD
-			if (!(!((int)c >= A && (int)c <= Z) && !((int)c >= a && (int)c <= z)
-				&& !((int)c >= So0 && (int)c <= So9)) && nhap.n < maxInput) {
-				if (nhap.n > 0 && *nhap.data[nhap.n - 1] == ' ' && c == ' ')
-					continue;
-				if (!(nhap.n == 0 && (int)c >= So0 && (int)c <= So9)) {
-					c = toupper(c);
-=======
 
 			if (!(!((int)c >= A && (int)c <= Z) && !((int)c >= a && (int)c <= z)
 				&& c != ' ') && nhap.n < maxInput) {
@@ -898,7 +883,6 @@ void NhapCHUOI(char var[], int len) {
 						else
 							c = tolower(c);
 					}
->>>>>>> 735c5371a3a8aec14ce5bc3cf7c82801decc1010
 					nhap.data[nhap.n] = new char;
 					cout << c;
 					*nhap.data[nhap.n] = c;
@@ -934,12 +918,8 @@ void NhapCHUOI(char var[], int len) {
 	var[nhap.n] = '\0';
 }
 
-<<<<<<< HEAD
-void NhapCHUOI(char var[], int len) {
-=======
 void NhapCHUOI_SO(char var[], int len) {
 
->>>>>>> 735c5371a3a8aec14ce5bc3cf7c82801decc1010
 	int maxInput = len;
 	if (maxInput == 0)
 		maxInput = MAX_INPUT;
@@ -951,14 +931,8 @@ void NhapCHUOI_SO(char var[], int len) {
 	while (true) {
 		if (_kbhit()) {
 			char c = _getch();
-<<<<<<< HEAD
-
-			if (!(!((int)c >= A && (int)c <= Z) && !((int)c >= a && (int)c <= z)
-				&& c != ' ') && nhap.n < maxInput) {
-=======
 			if (!(!((int)c >= 65 && (int)c <= 90) && !((int)c >= 97 && (int)c <= 122)
 				&& !((int)c >= 48 && (int)c <= 57) && c != ' ') && nhap.n < maxInput) {
->>>>>>> 735c5371a3a8aec14ce5bc3cf7c82801decc1010
 				if (nhap.n > 0 && *nhap.data[nhap.n - 1] == ' ' && c == ' ')
 					continue;
 				if (!(nhap.n == 0 && c == ' ')) {
@@ -1057,13 +1031,11 @@ void Nhap_SO(int& var, int len) {
 	num[nhap.n] = '\0';
 	var = atoi(num);
 }
-<<<<<<< HEAD
+
 /**
 * xu li nhap ngay
 **/
-=======
 
->>>>>>> 735c5371a3a8aec14ce5bc3cf7c82801decc1010
 void NhapNGAY(int& var, int len) {
 	char num[12] = { '\0' };
 	int maxInput = len;
@@ -1342,7 +1314,6 @@ void NhapPHUT(int& var, int len) {
 	num[nhap.n] = '\0';
 	var = atoi(num);
 }
-<<<<<<< HEAD
 
 char* CheckInputStr(bool nhapMa, int DongInfo) {
 	char info[50] = { '\0' };
@@ -1788,5 +1759,3 @@ mayBay ChonMB_LapCB(listMB list) {
 		}
 	} while (true);
 }
-=======
->>>>>>> 735c5371a3a8aec14ce5bc3cf7c82801decc1010
