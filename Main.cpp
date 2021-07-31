@@ -1,4 +1,9 @@
+<<<<<<< HEAD
 
+=======
+#pragma once
+#include <iostream>
+>>>>>>> 735c5371a3a8aec14ce5bc3cf7c82801decc1010
 #include <conio.h>
 #include "ThuVien.h"
 #define ESC 27
@@ -17,6 +22,7 @@ char tdChinh[soItem_MenuChinh][100] = { "1. Quan ly may bay                     
 using namespace std;
 
 int main(int argc, char** argv) {
+<<<<<<< HEAD
 	listMB list;
 	//int chon;
 	PTRChuyenBay listCB = NULL;
@@ -89,6 +95,57 @@ int main(int argc, char** argv) {
 	//	case 3:
 	//	{
 	//		PTRChuyenBay listCB;
+=======
+	int chon;
+	fullScreen();
+	int exit = 1;
+	while (exit) {
+		Normal();
+		system("cls");
+		char str[7];
+		chon = menuDong_Prim(tdChinh);
+		switch (chon) {
+		case 1:
+		{
+			NhapMA(str, 5);
+			cout << str;
+			hienThongBao("Chon 1", "Chon 2", "Chon 3", "Chon 4");
+			break;
+			/*QLMB(lstMB, lstCB);
+			break;*/
+		}
+		case 2:
+		{
+			/*int check = checkHoanTat_CB(lstCB);
+			QLCB(lstCB, lstMB);
+			int save = saveCB(lstCB);
+			break;*/
+		}
+		case 3:
+		{
+			/*DatHuyVe(lstCB, lstMB, lstHK);
+			break;*/
+		}
+		case 4:
+		{
+			/*dsHK_1_CB(lstCB, lstHK, lstMB);
+			break;*/
+		}
+		case 5:
+		{
+			/*locCB_CoNoiDen(lstCB, lstMB);
+			break;*/
+		}
+		case 6:
+		{
+			/*dsVeTrong_1_CB(lstCB, lstMB);
+			break;*/
+		}
+		case 7:
+		{
+			/*thongKeCB(lstCB, lstMB);
+			break;*/
+>>>>>>> 735c5371a3a8aec14ce5bc3cf7c82801decc1010
 
 	//		int checkLoadFileCB = loadCB(listCB, list);
 	//		if (checkLoadFileCB == 1)
