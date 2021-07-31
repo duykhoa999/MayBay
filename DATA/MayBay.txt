@@ -1,0 +1,13 @@
+
+VN01
+Vietjet
+9
+0
+VN02
+Jetstar
+10
+0
+VN03
+CSDANHDAN
+200
+0

@@ -6,7 +6,8 @@
 #include <dos.h>
 #include <string.h>
 #include <windows.h>
-
+#include <fstream>
+#include<time.h>
 #define WIDTH 207
 #define HEIGHT 52
 
@@ -27,7 +28,6 @@
 #define DONGNHAP7 36
 #define DONGNHAP8 40
 #define DONGNHAP9 44
-
 #define MIDDLE_DOC 65
 #define MIDDLE_NGANG 7
 #define RONGKHUNG 2
