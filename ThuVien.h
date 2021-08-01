@@ -18,6 +18,7 @@ const int MAX_DONG = 20;
 const int KC_GIO = 5;
 const int KC_GIOAM = 19;
 #define MAX_INPUT 255
+#define MAX_PAGE_SMALL 15
 
 using namespace std;
 
@@ -105,12 +106,19 @@ void Highlight();
 void Red_Highlight();
 void Green_Highlight();
 
-//======Ham Ve Khung Giao Dien======
+//======Ham Giao Dien======
 void khungGiaoDien();
 void fullScreen();
 void khungThongBao();
-void veKhungNhap(int dai, int rong, int posx, int posy, string source);
+void veKhungNhap(int dai, int rong, int posx, int posy, string source = "");
 void hienThongBao(string notif, string notif2 = "", string notif3 = "", string NoiDen = "");
+void xoaKhungDS();
+void hienHuongDan(int type);
+void khungNhapThongTin(int type, string title = "", string s1 = "", string s2 = "", string s3 = "", string s4 = "",
+	string s5 = "", string s6 = "", string s7 = "", string s8 = "", string s9 = "");
+void khungXuatDS(int type, int rong, int dai, int colump1 = 0, int colump2 = 0, int colump3 = 0, int colump4 = 0,
+	int colump5 = 0, int posx = 0, int posy = 0);
+void xoaThongTin(int type);
 
 //======Menu Chon======
 int menuDong_Prim(char td[soItem_MenuChinh][100]);
@@ -124,6 +132,7 @@ mayBay themMB(listMB &list);
 void xuat(mayBay mb);
 void showMotMB(listMB list, int chon, bool type, int dem);
 void showListMB(listMB list);
+
 //==========Cac ham kiem tra==========
 int checkMB_DaBay(mayBay mb, PTRChuyenBay lstCB);
 int checkTime_LapCB(CHUYENBAY cb, PTRChuyenBay lstCB);
@@ -139,10 +148,14 @@ CHUYENBAY createCB(PTRChuyenBay lstCB, listMB list);
 int huy_CB(PTRChuyenBay& lstCB, PTRChuyenBay p);
 int checkStatus_CB(CHUYENBAY cb);
 int checkTimeHienTai(THOI_GIAN tg);
+void show_1_CB(CHUYENBAY* cb, int chon);
+PTRChuyenBay searchBin_CB(PTRChuyenBay lstCB, char ma[]);
+
 //=================DOc ghi file==============
 int loadMB(listMB& list);
 int saveMB(listMB list);
 int loadCB(PTRChuyenBay& lstCB, listMB list);
+
 //=============Xu li chuoi===========
 void NhapMA(char var[], int len);
 void NhapCHUOI(char var[], int len);
@@ -174,5 +187,11 @@ int confirm(string chose1, string chose2, bool huyCB);
 //======================Giao dien menu==========
 mayBay ChonMB_LapCB(listMB list);
 
-void NhapPHUT(int& var, int len);
-
+//======================Dat Huy Ve================
+PTRChuyenBay ChonCB_DatVe_HuyVe(PTRChuyenBay lstCB, int& chonCB, listMB lstMB);
+void DatHuyVe(PTRChuyenBay& lstCB, listMB lstMB); //, TREEHanhKhach& lstHK
+void showCB_DatVe(PTRChuyenBay lstCB);
+void show_1_CB_DatVe(CHUYENBAY* cb, int chon);
+void chuyenMang(PTRChuyenBay lstCB, CHUYENBAY* cb[], int& n, listMB lstMB, int trangThai);
+int createDsVe(mayBay mb, string* lstVe);
+int demSoVe(string dsVe[], int slVe);
