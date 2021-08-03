@@ -1154,7 +1154,7 @@ PTRChuyenBay searchBin_CB(PTRChuyenBay lstCB, char ma[]) {
 
 }
 
-//======================Quan ly ve=================
+//======================Quan ly ve va dat huy ve=================
 int demSoVe(string dsVe[], int slVe) {
 	int dem = 0;
 	for (int i = 0; i < slVe; i++) {
@@ -1566,37 +1566,57 @@ PTRChuyenBay ChonCB_DatVe_HuyVe(PTRChuyenBay lstCB, int& chonCB, listMB lstMB) {
 		}
 		}
 	} while (true);
-//PTRChuyenBay g = NULL;
-//return g;
 }
 
-void show_1_Ve(int cot, int dong, int chon, int kc) {
+void show_1_Ve(int dsVe[], int cot, int dong, int chon, int kc) {
 	//int kc = 3;
 	gotoxy(COTDS_L + cot + kc, DONGDS_U + dong);
-	cout << chon;
+	cout << dsVe[chon];
 }
 
 int chonVe(PTRChuyenBay& lstCB) {
 	int chon = 0;
 	int kc = 3;
 	int n = 0;
-	for (int i = 0; i < lstCB->data.slVe/2; i++) {
-		for (int j = 0; j < lstCB->data.slVe/2; j++) {
+	int* tempSoVe = new int[lstCB->data.slVe];
+	for (int k = 0; k < lstCB->data.slVe; k++) {
+		tempSoVe[k] = k + 1;
+	}
+	int dong = 0;
+	int cot = 0;
+	for (int j = 0; j < lstCB->data.slVe; j++) {
+		if (lstCB->data.dsVe[n] != "")
+			Red_Highlight();
+		
+		show_1_Ve(tempSoVe, cot, dong, n, kc);
+		Normal();
+		dong++;
+		n++;
+		if (dong == 5) {
+			dong = 0;
+			cot++;
+			kc += 3;
+		}
+	}
+	/*for (int i = 0; i < 4; i++) {
+		for (int j = 0; j < 5; j++) {
 			if (lstCB->data.dsVe[n] != "")
 				Red_Highlight();
-			show_1_Ve(i, j, n, kc);
+			show_1_Ve(tempSoVe, i, j, n, kc);
 			Normal();
 			n++;
 		}
 		kc += 3;
-	}
-	int cot = 0;
-	int dong = 0;
+	}*/
+	int soDong = 5;
+	int soCot = cot;
+	cot = 0;
+	dong = 0;
 	kc = 3;
 	if (lstCB->data.dsVe[chon] != "")
 		Red_Highlight();
 	Highlight();
-	show_1_Ve(cot, dong, chon, kc);
+	show_1_Ve(tempSoVe, cot, dong, chon, kc);
 	char kytu;
 	do
 	{
@@ -1611,84 +1631,284 @@ int chonVe(PTRChuyenBay& lstCB) {
 		{
 			if (dong > 0) {
 				Normal();
-				if (lstCB->data.dsVe[chon] != "")
+				if (lstCB->data.dsVe[chon] != "") {
 					Red_Highlight();
-				show_1_Ve(cot, dong, chon, kc);
+				}
+				show_1_Ve(tempSoVe, cot, dong, chon, kc);
 				chon--;
 				dong--;
-
 				Highlight();
-				show_1_Ve(cot, dong, chon, kc);
+				show_1_Ve(tempSoVe, cot, dong, chon, kc);
 			}
 			break;
 		}
 		case DOWN:
 		{
-			/*if (dong + 1 < lstCB->data.dsVe.soDong) {
+			if (dong + 1 < soDong) {
 				Normal();
-				if (stricmp(lstCB->data.dsVe.Ve[chon]->data.CMND, "") != 0)
+				if (lstCB->data.dsVe[chon] != "") {
 					Red_Highlight();
-				show_1_Ve(lstCB->data.dsVe, cot, dong, chon, kc);
+				}
+				show_1_Ve(tempSoVe, cot, dong, chon, kc);
 				chon++;
 				dong++;
 				Highlight();
-				show_1_Ve(lstCB->data.dsVe, cot, dong, chon, kc);
+				show_1_Ve(tempSoVe, cot, dong, chon, kc);
 			}
-			break;*/
+			break;
 		}
 		case LEFT:
 		{
-			/*if (cot > 0) {
+			if (cot > 0) {
 				Normal();
-				if (stricmp(lstCB->data.dsVe.Ve[chon]->data.CMND, "") != 0)
+				if (lstCB->data.dsVe[chon] != "") {
 					Red_Highlight();
-				show_1_Ve(lstCB->data.dsVe, cot, dong, chon, kc);
-				chon -= lstCB->data.dsVe.soDong;
+				}
+				show_1_Ve(tempSoVe, cot, dong, chon, kc);
+				chon -= SODONG;
 				cot--;
 				kc -= 3;
 				Highlight();
-				show_1_Ve(lstCB->data.dsVe, cot, dong, chon, kc);
+				show_1_Ve(tempSoVe, cot, dong, chon, kc);
 			}
-			break;*/
+			break;
 		}
 		case RIGHT:
 		{
-			/*if (cot + 1 < lstCB->data.dsVe.soDay) {
+			if (cot + 1 < soCot) {
 				Normal();
-				if (stricmp(lstCB->data.dsVe.Ve[chon]->data.CMND, "") != 0)
+				if (lstCB->data.dsVe[chon] != "") {
 					Red_Highlight();
-				show_1_Ve(lstCB->data.dsVe, cot, dong, chon, kc);
-				chon += lstCB->data.dsVe.soDong;
+				}
+				show_1_Ve(tempSoVe, cot, dong, chon, kc);
+				chon += SODONG;
 				cot++;
 				kc += 3;
 				Highlight();
-				show_1_Ve(lstCB->data.dsVe, cot, dong, chon, kc);
+				show_1_Ve(tempSoVe, cot, dong, chon, kc);
 			}
-			break;*/
+			break;
 		}
 		case ESC:
 		{
 			Normal();
 			xoaKhungDS();
+			delete []tempSoVe;
 			return -1;
 		}
 		case ENTER:
 		{
-			/*Normal();
-			if (stricmp(lstCB->data.dsVe.Ve[chon]->data.CMND, "") != 0) {
+			Normal();
+			if (lstCB->data.dsVe[chon] != "") {
 				Red_Highlight();
 				hienThongBao("Ve nay da co nguoi dat!");
 				break;
 			}
 			xoaKhungDS();
-			return chon;*/
+			delete []tempSoVe;
+			return chon;
 		}
+		}
+	} while (true);
+	delete []tempSoVe;
+	return -1;
+}
+
+int chonVe_HUY(PTRChuyenBay& lstCB, HANHKHACH hk) {
+	int chon = 0;
+	int kc = 3;
+	int n = 0;
+	int* tempSoVe = new int[lstCB->data.slVe];
+	for (int k = 0; k < lstCB->data.slVe; k++) {
+		tempSoVe[k] = k + 1;
+	}
+	int dong = 0;
+	int cot = 0;
+	for (int j = 0; j < lstCB->data.slVe; j++) {
+		if (lstCB->data.dsVe[n] != "")
+			Red_Highlight();
+
+		show_1_Ve(tempSoVe, cot, dong, n, kc);
+		Normal();
+		dong++;
+		n++;
+		if (dong == 5) {
+			dong = 0;
+			cot++;
+			kc += 3;
+		}
+	}
+	/*for (int i = 0; i < 4; i++) {
+		for (int j = 0; j < 5; j++) {
+			if (lstCB->data.dsVe[n] != "")
+				Red_Highlight();
+			show_1_Ve(tempSoVe, i, j, n, kc);
+			Normal();
+			n++;
+		}
+		kc += 3;
+	}*/
+	int soDong = 5;
+	int soCot = cot;
+	cot = 0;
+	dong = 0;
+	kc = 3;
+	if (lstCB->data.dsVe[chon] != "")
+		Red_Highlight();
+	Highlight();
+	show_1_Ve(tempSoVe, cot, dong, chon, kc);
+	char kytu;
+	do
+	{
+		kytu = _getch();
+		if (kytu == -32)
+			kytu = _getch();
+		if (kytu == 0)
+			kytu = _getch();
+		switch (kytu)
+		{
+		case UP:
+		{
+			if (dong > 0) {
+				Normal();
+				if (lstCB->data.dsVe[chon] != "") {
+					Red_Highlight();
+				}
+				show_1_Ve(tempSoVe, cot, dong, chon, kc);
+				chon--;
+				dong--;
+				Highlight();
+				show_1_Ve(tempSoVe, cot, dong, chon, kc);
+			}
+			break;
+		}
+		case DOWN:
+		{
+			if (dong + 1 < soDong) {
+				Normal();
+				if (lstCB->data.dsVe[chon] != "") {
+					Red_Highlight();
+				}
+				show_1_Ve(tempSoVe, cot, dong, chon, kc);
+				chon++;
+				dong++;
+				Highlight();
+				show_1_Ve(tempSoVe, cot, dong, chon, kc);
+			}
+			break;
+		}
+		case LEFT:
+		{
+			if (cot > 0) {
+				Normal();
+				if (lstCB->data.dsVe[chon] != "") {
+					Red_Highlight();
+				}
+				show_1_Ve(tempSoVe, cot, dong, chon, kc);
+				chon -= SODONG;
+				cot--;
+				kc -= 3;
+				Highlight();
+				show_1_Ve(tempSoVe, cot, dong, chon, kc);
+			}
+			break;
+		}
+		case RIGHT:
+		{
+			if (cot + 1 < soCot) {
+				Normal();
+				if (lstCB->data.dsVe[chon] != "") {
+					Red_Highlight();
+				}
+				show_1_Ve(tempSoVe, cot, dong, chon, kc);
+				chon += SODONG;
+				cot++;
+				kc += 3;
+				Highlight();
+				show_1_Ve(tempSoVe, cot, dong, chon, kc);
+			}
+			break;
+		}
+		case ESC:
+		{
+			Normal();
+			xoaKhungDS();
+			delete[]tempSoVe;
+			return -1;
+		}
+		case ENTER:
+			Normal();
+			if (lstCB->data.dsVe[chon] == ""
+				|| lstCB->data.dsVe[chon] !=  hk.CMND) {
+				Red_Highlight();
+				hienThongBao("Chua dat ve nay, khong the huy!");
+				break;
+			}
+			int xacNhan = confirm("DONG Y", "TRO VE", false);
+			if (xacNhan == 2 || xacNhan == 0)
+				break;
+			xoaKhungDS();
+			return chon;
 		}
 	} while (true);
 	return -1;
 }
 
-void DatHuyVe(PTRChuyenBay& lstCB, listMB lstMB) {
+void insertVe(string dsVe[], int vitri, char cmnd[]) {
+	dsVe[vitri] = cmnd;
+}
+
+int checkVeCung_CB(PTRChuyenBay p, HANHKHACH hk) {
+	for (int i = 0; i < p->data.slVe; i++) {
+		if (hk.CMND == p->data.dsVe[i]) {
+			return 1;
+		}
+	}
+	return 0;
+}
+
+PTRChuyenBay checkVeCungTime(PTRChuyenBay lstCB, PTRChuyenBay p, HANHKHACH hk) {
+	PTRChuyenBay q = lstCB;
+	bool check = false;
+	for (q; q != NULL; q = q->next) {
+		/*kiem tra co khac chuyen bay, bay cung ngay va co cach nhau
+		5 tieng hay khong*/
+		if (_stricmp(p->data.maChuyenBay, q->data.maChuyenBay) != 0
+			&& toTime(p->data.tgKhoiHanh) - toTime(q->data.tgKhoiHanh) == 0
+			&& !checkKC_5Gio(p->data.tgKhoiHanh, q->data.tgKhoiHanh)) {
+			if (!checkVeCung_CB(q, hk))
+				return NULL;
+			else return q;
+		}
+	}
+	if (q == NULL)
+		return NULL;
+}
+
+int checkHK_HuyVe(PTRChuyenBay p, HANHKHACH& hk) {
+	khungNhapThongTin(GDTHEM_HK, "HUY VE", "CMND", "Ho", "Ten", "Phai");
+
+	//HANHKHACH hk;
+	do
+	{
+		strcpy(hk.CMND, CheckInputCMND(DONGNHAP1));
+		if (hk.CMND[0] != ESC) {
+			if (checkVeCung_CB(p, hk)) {
+				return 1;
+			}
+			else return 0;
+		}
+		else
+			return 0;
+	} while (true);
+}
+
+int cancelVe(string dsVe[], int vitri) {
+	dsVe[vitri] = "";
+	return 1;
+}
+
+void DatHuyVe(PTRChuyenBay& lstCB, listMB lstMB, TREEHanhKhach& lstHK) {
 	int chon;
 	int exit = 1;
 	int vitri;
@@ -1706,62 +1926,61 @@ void DatHuyVe(PTRChuyenBay& lstCB, listMB lstMB) {
 		{
 			xoaKhungDS();
 			vitri = chonVe(p);
-			//if (vitri == -1)
-			//	break;
-			//HANHKHACH hk = create_HK(lstHK, lstCB);
+			if (vitri == -1)
+				break;
+			HANHKHACH hk = create_HK(lstHK, lstCB);
 			//// sau khi sua thong tin hanh khach thi phai cap nhat lai vao file
+			if (hk.CMND[0] == ESC) {
+				Red_Highlight();
+				hienThongBao("Da huy dat ve!");
+				Normal();
+				break;
+			}
 
-			//if (hk.CMND[0] == ESC) {
-			//	Red_Highlight();
-			//	hienThongBao("Da huy dat ve!");
-			//	Normal();
-			//	break;
-			//}
-
-			//// truong hop dat ve tren cung 1 chuyen bay
-			//if (checkVeCung_CB(p, hk)) {
-			//	Red_Highlight();
-			//	hienThongBao("Quy khach da dat ve chuyen bay nay roi!");
-			//	break;
-			//}
+			// truong hop dat ve tren cung 1 chuyen bay
+			if (checkVeCung_CB(p, hk)) {
+				Red_Highlight();
+				hienThongBao("Quy khach da dat ve chuyen bay nay roi!");
+				break;
+			}
 
 			//// truong hop dat ve cung thoi diem tren 2 chuyen khac nhau
-			//PTRChuyenBay tmp = checkVeCungTime(lstCB, p, hk);
-			//if (tmp != NULL) {
-			//	Red_Highlight();
-			//	hienThongBao("Quy khach da dat ve tren chuyen bay: ", string(tmp->data.maChuyenBay), string(tmp->data.sanBayDen), "Den noi:");
+			PTRChuyenBay tmp = checkVeCungTime(lstCB, p, hk);
+			if (tmp != NULL) {
+				Red_Highlight();
+				hienThongBao("Quy khach da dat ve tren chuyen bay: ", string(tmp->data.maChuyenBay), string(tmp->data.sanBayDen), "Den noi:");
 
-			//	break;
-			//}
+				break;
+			}
 
 			//// them ve vao ds ve
-			//insertNode_HK(lstHK, hk);
-			//insertVe(p->data.dsVe, vitri, hk.CMND);
-			//if (demSoVe(p->data.dsVe) == p->data.dsVe.n) {
-			//	p->data.trangThai = HETVE;
-			//}
-			//Green_Highlight();
-			//hienThongBao("Dat ve thanh cong!");
+			insertNode_HK(lstHK, hk);
+			insertVe(p->data.dsVe, vitri, hk.CMND);
+			if (demSoVe(p->data.dsVe, p->data.slVe) == p->data.slVe) {
+				p->data.trangThai = HETVE;
+			}
+			Green_Highlight();
+			hienThongBao("Dat ve thanh cong!");
 			//int savehk = saveHK(lstHK);
 			//int savecb = saveCB(lstCB);
-			//break;
+			break;
 		}
 		case HUYVE:
 		{
-			/*xoaKhungDS();
+			xoaKhungDS();
 			HANHKHACH hk;
 			if (checkHK_HuyVe(p, hk)) {
 				vitri = chonVe_HUY(p, hk);
 				if (vitri == -1)
 					break;
-				int cancle = cancelVe(p->data.dsVe, vitri);
-				if (cancle == 1) {
-					if (demSoVe(p->data.dsVe) == p->data.dsVe.n) {
+				int cancel = cancelVe(p->data.dsVe, vitri);
+				if (cancel == 1) {
+					if (demSoVe(p->data.dsVe, p->data.slVe) == p->data.slVe) {
 						p->data.trangThai = HETVE;
 					}
 					Green_Highlight();
 					hienThongBao("Huy ve thanh cong!");
-					int save = saveCB(lstCB);
+					//int save = saveCB(lstCB);
 				}
 
 			}
@@ -1769,21 +1988,274 @@ void DatHuyVe(PTRChuyenBay& lstCB, listMB lstMB) {
 				Red_Highlight();
 				hienThongBao("Quy khach chua dat ve chuyen bay nay!");
 			}
-			break;*/
+			break;
 		}
 		case soItem_MenuCB:
 		{
-			/*exit = 0;
-			break;*/
+			exit = 0;
+			break;
 		}
 		}
 	}
 }
 
-//=============Quan Ly Dat Huy Ve===============
+//========== Xu ly hanh khach============
+void init_HK(TREEHanhKhach& lstHK) {
+	lstHK = NULL;
+}
 
+int empty_HK(TREEHanhKhach lstHK) {
+	return lstHK == NULL;
+}
+void insertNode_HK(TREEHanhKhach& lstHK, HANHKHACH p) {
+	if (lstHK == NULL)
+	{
+		lstHK = new NodeHanhKhach;
+		lstHK->data = p;
+		lstHK->Left = NULL;
+		lstHK->Right = NULL;
+	}
+	else
+	{
+		if (_stricmp(lstHK->data.CMND, p.CMND) > 0)
+		{
+			insertNode_HK(lstHK->Left, p);
+		}
+		else if (_stricmp(lstHK->data.CMND, p.CMND) < 0)
+		{
+			insertNode_HK(lstHK->Right, p);
+		}
+	}
+}
+
+TREEHanhKhach timKiem_HK(TREEHanhKhach lstHK, char cmnd[]) {
+	TREEHanhKhach p;
+	p = lstHK;
+
+	while (p != NULL && _stricmp(p->data.CMND, cmnd) != 0)
+	{
+		if (_stricmp(p->data.CMND, cmnd) > 0)
+		{
+			p = p->Left;
+		}
+		else if (_stricmp(p->data.CMND, cmnd) < 0)
+		{
+			p = p->Right;
+		}
+	}
+	return p;
+}
+
+void showHK(TREEHanhKhach lstHK) {
+	gotoxy(COT + 1, DONGNHAP1 + 2);
+	cout << lstHK->data.CMND;
+	gotoxy(COT + 1, DONGNHAP2 + 2);
+	cout << lstHK->data.ho;
+	gotoxy(COT + 1, DONGNHAP3 + 2);
+	cout << lstHK->data.ten;
+	gotoxy(COT + 1, DONGNHAP4 + 2);
+	cout << (lstHK->data.phai == NAM ? "Nam" : "Nu");
+}
+
+int timTrung_HK(TREEHanhKhach lstHK, char soCMND[]) {
+	if (lstHK == NULL)
+		return 0;
+	if (lstHK != NULL)
+	{
+		if (_stricmp(lstHK->data.CMND, soCMND) == 0) // neu so CMND ton tai trong cay
+		{
+			return 1;
+		}
+		else if (_stricmp(lstHK->data.CMND, soCMND) > 0)
+		{
+			timTrung_HK(lstHK->Left, soCMND);
+		}
+		else if (_stricmp(lstHK->data.CMND, soCMND) < 0)
+		{
+			timTrung_HK(lstHK->Right, soCMND);
+		}
+	}
+}
+
+int hieuChinh_HK(TREEHanhKhach& lstHK, TREEHanhKhach t, PTRChuyenBay& lstCB) {
+	HANHKHACH hk;
+
+	do
+	{
+		strcpy(hk.CMND, CheckInputCMND(DONGNHAP1));
+
+		if (timTrung_HK(lstHK, hk.CMND)) {
+			/* ham kiem tra dat ve tren cung 1 chuyen bay hay khong */
+			Red_Highlight();
+			hienThongBao("CMND nay da co!");
+		}
+		else {
+			if (hk.CMND[0] == ESC) {
+				return 0;
+			}
+			else break;
+		}
+	} while (true);
+
+	do
+	{
+		strcpy(hk.ho, CheckInputStr(false, DONGNHAP2));
+
+		if (hk.ho[0] == ESC) {
+			hk.CMND[0] = ESC;
+			return 0;
+		}
+		else
+			break;
+	} while (true);
+
+	do
+	{
+		strcpy(hk.ten, CheckInputStr(false, DONGNHAP3));
+
+		if (hk.ten[0] == ESC) {
+			hk.CMND[0] = ESC;
+			return 0;
+		}
+		else
+			break;
+	} while (true);
+
+	int chon = confirm("NAM", "NU", false);
+	if (chon == YES)
+		hk.phai = NAM; // nam
+	if (chon == NO)
+		hk.phai = NU; // nam
+
+	// doi lai CMND moi trong ds ve cua chuyen bay
+	for (PTRChuyenBay p = lstCB; p != NULL; p = p->next) {
+		for (int i = 0; i < p->data.slVe; i++) {
+			if (t->data.CMND == p->data.dsVe[i]) {
+				p->data.dsVe[i] = hk.CMND;
+				break;
+			}
+		}
+	}
+	t->data = hk;
+
+	return 1;
+}
+
+HANHKHACH create_HK(TREEHanhKhach& lstHK, PTRChuyenBay& lstCB) {
+	khungNhapThongTin(GDTHEM_HK, "NHAP THONG TIN HANH KHACH", "Nhap CMND", "Nhap ho", "Nhap ten", "Chon phai");
+	HANHKHACH hk;
+
+	do
+	{
+		strcpy(hk.CMND, CheckInputCMND(DONGNHAP1));
+		/* kiem tra hanh khach da co hay chua */
+		TREEHanhKhach tmp = timKiem_HK(lstHK, hk.CMND);
+		if (tmp != NULL) {
+			showHK(tmp);
+		DatVe:
+			int sua = confirm("SUA THONG TIN", "DAT VE", false);
+			if (sua == YES) {
+				int hieuChinh = hieuChinh_HK(lstHK, tmp, lstCB);
+				if (hieuChinh) {
+					Green_Highlight();
+					hienThongBao("Sua thong tin thanh cong!");
+					/*int savehk = saveHK(lstHK);
+					int savecb = saveCB(lstCB);*/
+					int datVe = confirm("DAT VE", "TRO VE", false);
+					if (datVe == YES) {
+						return tmp->data;
+					}
+					else {
+						tmp->data.CMND[0] = ESC;
+						return tmp->data;
+					}
+				}
+				else
+					goto DatVe;
+			}
+			else if (sua == NO) {
+				int datVe = confirm("DONG Y", "TRO VE", false);
+				if (datVe == YES) {
+
+					return tmp->data;
+				}
+				else {
+					tmp->data.CMND[0] = ESC;
+					return tmp->data;
+				}
+			}
+
+		}
+		else {
+			if (hk.CMND[0] == ESC) {
+				return hk;
+			}
+			else break;
+		}
+	} while (true);
+
+	do
+	{
+		strcpy(hk.ho, CheckInputStr(false, DONGNHAP2));
+
+		if (hk.ho[0] == ESC) {
+			hk.CMND[0] = ESC;
+			return hk;
+		}
+		else
+			break;
+	} while (true);
+
+	do
+	{
+		strcpy(hk.ten, CheckInputStr(false, DONGNHAP3));
+
+		if (hk.ten[0] == ESC) {
+			hk.CMND[0] = ESC;
+			return hk;
+		}
+		else
+			break;
+	} while (true);
+
+	int chon = confirm("NAM", "NU", false);
+	if (chon == YES)
+		hk.phai = NAM; // nam
+	if (chon == NO)
+		hk.phai = NU; // nam
+	return hk;
+}
 
 //========== xu ly nhap chuoi ===========
+char* CheckInputCMND(int DongInfo) {
+	char info[50] = { '\0' };
+	do
+	{
+		rewind(stdin);
+		gotoxy(COT + 1, DongInfo + 2);
+		cout << "                                ";
+		gotoxy(COT + 1, DongInfo + 2);
+		NhapCHUOI_SO(info, 50);
+		if (info[0] == '\0') {
+			Red_Highlight();
+			hienThongBao("Chua nhap thong tin!");
+		}
+		// kiem tra nguoi nhap co nhan phim ESC de huy hay khong
+		else if (info[0] == ESC) {
+			int exit = confirm("HUY", "NHAP TIEP", false);
+			if (exit == YES) {
+				return info;
+			}
+			else
+				continue;
+		}
+		else {
+			return info;
+		}
+
+	} while (true);
+}
+
 void NhapMA(char var[], int len) {
 	int maxInput = len;
 	if (maxInput == 0)

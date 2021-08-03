@@ -10,6 +10,7 @@
 #define CONVE 1
 #define HETVE 2
 #define HOANTAT 3
+#define SODONG 5
 using namespace std; 
 const int MAX_NAM = 9999;
 const int MIN_NAM = 1800;
@@ -19,6 +20,8 @@ const int KC_GIO = 5;
 const int KC_GIOAM = 19;
 #define MAX_INPUT 255
 #define MAX_PAGE_SMALL 15
+#define NAM 0
+#define NU 1
 
 using namespace std;
 
@@ -174,6 +177,7 @@ void NhapGIO(int& var, int len);
 void NhapPHUT(int& var, int len);
 char* CheckInputStr(bool nhapMa, int DongInfo);
 int CheckInputNum(int DongInfo);
+char* CheckInputCMND(int DongInfo);
 THOI_GIAN CheckInputDate(THOI_GIAN& tg, int DongInfo);
 THOI_GIAN CheckInputTime(THOI_GIAN& tg, int DongInfo);
 int rangBuocThoiGian(THOI_GIAN tg);
@@ -189,9 +193,23 @@ mayBay ChonMB_LapCB(listMB list);
 
 //======================Dat Huy Ve================
 PTRChuyenBay ChonCB_DatVe_HuyVe(PTRChuyenBay lstCB, int& chonCB, listMB lstMB);
-void DatHuyVe(PTRChuyenBay& lstCB, listMB lstMB); //, TREEHanhKhach& lstHK
+void DatHuyVe(PTRChuyenBay& lstCB, listMB lstMB, TREEHanhKhach& lstHK);
 void showCB_DatVe(PTRChuyenBay lstCB);
 void show_1_CB_DatVe(CHUYENBAY* cb, int chon);
 void chuyenMang(PTRChuyenBay lstCB, CHUYENBAY* cb[], int& n, listMB lstMB, int trangThai);
 int createDsVe(mayBay mb, string* lstVe);
 int demSoVe(string dsVe[], int slVe);
+void insertVe(string dsVe[], int vitri, char cmnd[]);
+int checkVeCung_CB(PTRChuyenBay p, HANHKHACH hk);
+PTRChuyenBay checkVeCungTime(PTRChuyenBay lstCB, PTRChuyenBay p, HANHKHACH hk);
+int checkHK_HuyVe(PTRChuyenBay p, HANHKHACH& hk);
+
+//=======================Hanh Khach==================
+void init_HK(TREEHanhKhach& lstHK);
+int empty_HK(TREEHanhKhach lstHK);
+HANHKHACH create_HK(TREEHanhKhach& lstHK, PTRChuyenBay& lstCB);
+TREEHanhKhach timKiem_HK(TREEHanhKhach lstHK, char cmnd[]);
+void showHK(TREEHanhKhach lstHK);
+int hieuChinh_HK(TREEHanhKhach& lstHK, TREEHanhKhach t, PTRChuyenBay& lstCB);
+int timTrung_HK(TREEHanhKhach lstHK, char soCMND[]);
+void insertNode_HK(TREEHanhKhach& lstHK, HANHKHACH p);

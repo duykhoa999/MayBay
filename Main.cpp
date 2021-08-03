@@ -19,8 +19,11 @@ using namespace std;
 int main(int argc, char** argv) {
 	listMB list;
 	int chon;
-	PTRChuyenBay listCB = NULL;
+	TREEHanhKhach lstHK;
+	PTRChuyenBay listCB;
 	CHUYENBAY cb;
+	init_HK(lstHK);
+	initCB(listCB);
 
 	//int checkLoadFileCB = loadCB(listCB, list);
 	//if (checkLoadFileCB == 1)
@@ -52,7 +55,7 @@ int main(int argc, char** argv) {
 	cb.tgKhoiHanh.gio = 5;
 	cb.tgKhoiHanh.phut = 30;
 	cb.trangThai = 1;
-	cb.slVe = 20;
+	cb.slVe = 26;
 	cb.dsVe = new string[cb.slVe];
 	for (int i = 0; i < cb.slVe; i++) {
 		cb.dsVe[i] = "";
@@ -105,8 +108,12 @@ int main(int argc, char** argv) {
 			}
 			case 3:
 			{
-				DatHuyVe(listCB, list);
+				DatHuyVe(listCB, list, lstHK);
 				break;
+			}
+			case 0:
+			{
+				return 0;
 			}
 		}
 	}
