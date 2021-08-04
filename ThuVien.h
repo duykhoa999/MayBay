@@ -122,6 +122,7 @@ void khungNhapThongTin(int type, string title = "", string s1 = "", string s2 = 
 void khungXuatDS(int type, int rong, int dai, int colump1 = 0, int colump2 = 0, int colump3 = 0, int colump4 = 0,
 	int colump5 = 0, int posx = 0, int posy = 0);
 void xoaThongTin(int type);
+char* gdTimMa(int type, string title);
 
 //======Menu Chon======
 int menuDong_Prim(char td[soItem_MenuChinh][100]);
@@ -213,3 +214,9 @@ void showHK(TREEHanhKhach lstHK);
 int hieuChinh_HK(TREEHanhKhach& lstHK, TREEHanhKhach t, PTRChuyenBay& lstCB);
 int timTrung_HK(TREEHanhKhach lstHK, char soCMND[]);
 void insertNode_HK(TREEHanhKhach& lstHK, HANHKHACH p);
+
+//========================Thong ke====================
+PTRChuyenBay ChonCB_Xuat_DSHK(PTRChuyenBay lstCB, int& chonCB, listMB lstMB, TREEHanhKhach lstHK);
+void xuatHK_1_CB(CHUYENBAY* cb, TREEHanhKhach lstHK, int page);
+void dsHK_1_CB(PTRChuyenBay lstCB, TREEHanhKhach lstHK, listMB lstMB);
+void xuatALL_HK_1_CB(CHUYENBAY* cb, TREEHanhKhach lstHK);

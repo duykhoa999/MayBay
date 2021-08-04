@@ -101,6 +101,7 @@ int main(int argc, char** argv) {
 					showListMB(list);
 				}
 				else hienThongBao("load that bai");
+				break;
 				/*int check = checkHoanTat_CB(lstCB);
 				QLCB(lstCB, lstMB);
 				int save = saveCB(lstCB);
@@ -109,6 +110,11 @@ int main(int argc, char** argv) {
 			case 3:
 			{
 				DatHuyVe(listCB, list, lstHK);
+				break;
+			}
+			case 4:
+			{
+				dsHK_1_CB(listCB, lstHK, list);
 				break;
 			}
 			case 0:
