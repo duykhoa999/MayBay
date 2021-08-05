@@ -159,6 +159,7 @@ PTRChuyenBay searchBin_CB(PTRChuyenBay lstCB, char ma[]);
 int loadMB(listMB& list);
 int saveMB(listMB list);
 int loadCB(PTRChuyenBay& lstCB, listMB list);
+int loadHK(TREEHanhKhach& lstHK);
 
 //=============Xu li chuoi===========
 void NhapMA(char var[], int len);

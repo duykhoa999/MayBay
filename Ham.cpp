@@ -796,7 +796,7 @@ int loadMB(listMB& list) {
 }
 int saveMB(listMB list) {
 	fstream outFile;
-	outFile.open("C:/Users/anhse/source/repos/MayBay/DATA/MayBay.txt", ios::out);
+	outFile.open("D:/Study/CTDL/MayBay/DATA/MayBay.txt", ios::out);
 	int i = 0;
 	if (outFile.is_open()) {
 		while (i < list.n) {
@@ -819,15 +819,13 @@ int saveMB(listMB list) {
 int loadCB(PTRChuyenBay& lstCB, listMB list) {
 
 	fstream inFile;
-	inFile.open("C:/Users/anhse/source/repos/MayBay/DATA/ChuyenBay.txt", ios::in);
+	inFile.open("D:/Study/CTDL/MayBay/DATA/ChuyenBay.txt", ios::in);
 	string temp;
 	string temp1 = "";
 	string ve;
 	int slCB;
 	if (inFile.is_open()) {
 		while (!inFile.eof()) {
-
-
 			getline(inFile, temp);
 			if (temp == "") {
 				CHUYENBAY cb;
@@ -841,23 +839,23 @@ int loadCB(PTRChuyenBay& lstCB, listMB list) {
 				inFile >> cb.tgKhoiHanh.phut;
 				inFile >> cb.trangThai;
 				inFile >> cb.slVe;
-				mayBay mb = getMB(list, cb.soHieuMayBay);
 				cb.dsVe = new string[cb.slVe];
+				for (int i = 0; i < cb.slVe; i++) {
+					cb.dsVe[i] = "";
+				}
 
 				getline(inFile, temp1);
-				//getline(inFile, temp1);
+				getline(inFile, temp1);
 				while (temp1 != "") {
 
 					int vitri = 0;
-					char cmnd[12] = "";
-
+					char cmnd[21] = "";
 
 					catChuoi(temp1, '-', vitri, cmnd);
 					cb.dsVe[vitri] = cmnd;
 
 					getline(inFile, temp1);
 				}
-
 				insertNodeCB(lstCB, cb);
 			}
 		}
@@ -869,6 +867,63 @@ int loadCB(PTRChuyenBay& lstCB, listMB list) {
 	inFile.close();
 	return 1;
 }
+
+//======================Doc ghi file Hanh khach==============
+int loadHK(TREEHanhKhach& lstHK) {
+	fstream inFile;
+	inFile.open("D:/Study/CTDL/MayBay/DATA/HanhKhach.txt", ios::in);
+	HANHKHACH hk;
+	string temp;
+	char phai[4];
+	if (!inFile.fail()) {
+		while (!inFile.eof())
+		{
+			getline(inFile, temp);
+			inFile.getline(hk.CMND, 21);
+			inFile.getline(hk.ho, 31);
+			inFile.getline(hk.ten, 11);
+			inFile.getline(phai, 4);
+			if (_stricmp(phai, "Nam") == 0) {
+				hk.phai = NAM;
+			}
+			else if (_stricmp(phai, "Nu") == 0) {
+				hk.phai = NU;
+			}
+			insertNode_HK(lstHK, hk);
+		}
+	}
+	else {
+		return 0;
+	}
+	inFile.close();
+	return 1;
+}
+void duyetCay(TREEHanhKhach lstHK, fstream& file) {
+	if (lstHK != NULL) {
+		file << endl << lstHK->data.CMND;
+		file << endl << lstHK->data.ho;
+		file << endl << lstHK->data.ten;
+		if (lstHK->data.phai == NAM)
+			file << endl << "Nam";
+		else if (lstHK->data.phai == NU)
+			file << endl << "Nu";
+		file << endl;
+		duyetCay(lstHK->Left, file);
+		duyetCay(lstHK->Right, file);
+	}
+}
+int saveHK(TREEHanhKhach lstHK) {
+	fstream outFile;
+	outFile.open("D:/Study/CTDL/MayBay/DATA/HanhKhach.txt", ios::out);
+	if (!outFile.fail()) {
+		duyetCay(lstHK, outFile);
+	}
+	else
+		return 0;
+	outFile.close();
+	return 1;
+}
+
 //======================Chuyen bay===============
 /**
 * khoi tao chuyen bay
@@ -1226,11 +1281,6 @@ void chuyenMang(PTRChuyenBay lstCB, CHUYENBAY* cb[], int& n, listMB lstMB, int t
 			cb[n]->tgKhoiHanh.gio = p->data.tgKhoiHanh.gio;
 			cb[n]->tgKhoiHanh.phut = p->data.tgKhoiHanh.phut;
 			cb[n]->trangThai = p->data.trangThai;
-			//cb[n]->slVe = 20;
-
-			mayBay mb = getMB(lstMB, cb[n]->soHieuMayBay);
-			//cb[n]->slVe = mb.soCho;
-			//int dsve = createDsVe(mb, cb[n]->dsVe);
 			cb[n]->dsVe = p->data.dsVe;
 			cb[n]->slVe = p->data.slVe;
 			for (int k = 0; k < cb[n]->slVe; k++) {
@@ -1258,7 +1308,6 @@ void chuyenMang(PTRChuyenBay lstCB, CHUYENBAY* cb[], int& n, listMB lstMB, int t
 				cb[n]->tgKhoiHanh.gio = p->data.tgKhoiHanh.gio;
 				cb[n]->tgKhoiHanh.phut = p->data.tgKhoiHanh.phut;
 				cb[n]->trangThai = p->data.trangThai;
-				mayBay mb = getMB(lstMB, cb[n]->soHieuMayBay);
 				cb[n]->dsVe = p->data.dsVe;
 				cb[n]->slVe = p->data.slVe;
 				//int dsve = createDsVe(mb, cb[n]->dsVe);
@@ -1973,7 +2022,7 @@ void DatHuyVe(PTRChuyenBay& lstCB, listMB lstMB, TREEHanhKhach& lstHK) {
 			}
 			Green_Highlight();
 			hienThongBao("Dat ve thanh cong!");
-			//int savehk = saveHK(lstHK);
+			int savehk = saveHK(lstHK);
 			//int savecb = saveCB(lstCB);
 			break;
 		}
@@ -3055,7 +3104,7 @@ void catChuoi(string chuoi, char splitChar, int& vtri, char cmnd[]) {
 	int k = 0;
 	for (int i = 0; i < len; i++) {
 		if (chuoi.at(i) == splitChar) {
-			vtri = atoi(chuoi.substr(4, i).c_str());
+			vtri = atoi(chuoi.substr(0, i).c_str());
 			for (int j = i + 1; j < len; j++) {
 				cmnd[k] = chuoi[j];
 				k++;
@@ -3065,7 +3114,7 @@ void catChuoi(string chuoi, char splitChar, int& vtri, char cmnd[]) {
 		}
 	}
 }
-//============Xu li chuc nang danh sach
+//============Xu li chuc nang danh sach=============
 
 int confirm(string chose1, string chose2, bool huyCB) {
 	char key;
