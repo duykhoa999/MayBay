@@ -21,8 +21,8 @@ D:\Study\CTDL\MayBay\Ham.cpp(2729,22): warning C4267: '=': conversion from 'size
 D:\Study\CTDL\MayBay\Ham.cpp(2784,22): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
 D:\Study\CTDL\MayBay\Ham.cpp(3103,26): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
 D:\Study\CTDL\MayBay\Ham.cpp(3183,6): warning C4101: 'i': unreferenced local variable
-D:\Study\CTDL\MayBay\mylib.h(118): warning C4172: returning address of local variable or temporary: S
 D:\Study\CTDL\MayBay\Ham.cpp(476): warning C4172: returning address of local variable or temporary: temp
+D:\Study\CTDL\MayBay\mylib.h(118): warning C4172: returning address of local variable or temporary: S
 D:\Study\CTDL\MayBay\Ham.cpp(669): warning C4715: 'checkMB_DaBay': not all control paths return a value
 D:\Study\CTDL\MayBay\Ham.cpp(1947): warning C4715: 'checkVeCungTime': not all control paths return a value
 D:\Study\CTDL\MayBay\Ham.cpp(2139): warning C4715: 'timTrung_HK': not all control paths return a value
