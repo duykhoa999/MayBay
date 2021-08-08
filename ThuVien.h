@@ -19,7 +19,7 @@ const int MAX_DONG = 20;
 const int KC_GIO = 5;
 const int KC_GIOAM = 19;
 #define MAX_INPUT 255
-#define MAX_PAGE_SMALL 15
+#define MAX_PAGE_SMALL 5
 #define NAM 0
 #define NU 1
 

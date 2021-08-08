@@ -71,8 +71,6 @@ void khungNhapThongTin(int type, string title, string s1, string s2, string s3, 
 	//==========================
 	if (type == TIM_MA) {
 		gotoxy(COT + 25, DONGTD);
-		cout << "                                    ";
-		gotoxy(COT + 25, DONGTD);
 		cout << title;
 		gotoxy(COT, DONGNHAP1);
 		cout << "Nhap so hieu can tim:";
@@ -1587,10 +1585,13 @@ PTRChuyenBay ChonCB_DatVe_HuyVe(PTRChuyenBay lstCB, int& chonCB, listMB lstMB) {
 		}
 		case F3:
 		{
-			/*tmp[0] = '\0';
+			tmp[0] = '\0';
 			do
 			{
-				strcpy(tmp, gdTimMa(0, "TIM CHUYEN BAY"));
+				strcpy(tmp, gdTimMa(TIM_MA, "TIM CHUYEN BAY"));
+				if (tmp[0] == ESC) {
+					return NULL;
+				}
 				q = searchBin_CB(lstCB, tmp);
 				if (q == NULL) {
 					Red_Highlight();
@@ -1602,7 +1603,7 @@ PTRChuyenBay ChonCB_DatVe_HuyVe(PTRChuyenBay lstCB, int& chonCB, listMB lstMB) {
 			if (chonCB == CANCEL)
 				break;
 			Normal();
-			return q;*/
+			return q;
 		}
 		case ESC:
 		{
@@ -1653,24 +1654,17 @@ int chonVe(PTRChuyenBay& lstCB) {
 		Normal();
 		dong++;
 		n++;
-		if (dong == 5) {
+		if (dong == SODONG) {
 			dong = 0;
 			cot++;
 			kc += 3;
 		}
 	}
-	/*for (int i = 0; i < 4; i++) {
-		for (int j = 0; j < 5; j++) {
-			if (lstCB->data.dsVe[n] != "")
-				Red_Highlight();
-			show_1_Ve(tempSoVe, i, j, n, kc);
-			Normal();
-			n++;
-		}
-		kc += 3;
-	}*/
-	int soDong = 5;
+	int soDong = SODONG;
 	int soCot = cot;
+	if (lstCB->data.slVe % soDong != 0) {
+		soCot++;
+	}
 	cot = 0;
 	dong = 0;
 	kc = 3;
@@ -1711,8 +1705,10 @@ int chonVe(PTRChuyenBay& lstCB) {
 					Red_Highlight();
 				}
 				show_1_Ve(tempSoVe, cot, dong, chon, kc);
-				chon++;
-				dong++;
+				if (chon < lstCB->data.slVe - 1) {
+					chon++;
+					dong++;
+				}
 				Highlight();
 				show_1_Ve(tempSoVe, cot, dong, chon, kc);
 			}
@@ -3472,6 +3468,9 @@ PTRChuyenBay ChonCB_Xuat_DSHK(PTRChuyenBay lstCB, int& chonCB, listMB lstMB, TRE
 			do
 			{
 				strcpy(tmp, gdTimMa(0, "TIM CHUYEN BAY"));
+				if (tmp[0] == ESC) {
+					return NULL;
+				}
 				q = searchBin_CB(lstCB, tmp);
 				if (q == NULL) {
 					Red_Highlight();
