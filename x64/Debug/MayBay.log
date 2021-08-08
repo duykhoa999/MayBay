@@ -20,6 +20,10 @@ D:\Study\CTDL\MayBay\Ham.cpp(2728,22): warning C4267: '=': conversion from 'size
 D:\Study\CTDL\MayBay\Ham.cpp(2783,22): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
 D:\Study\CTDL\MayBay\Ham.cpp(3102,26): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
 D:\Study\CTDL\MayBay\Ham.cpp(3182,6): warning C4101: 'i': unreferenced local variable
+  Main.cpp
+D:\Study\CTDL\MayBay\ThuVien.h(75,2): warning C4091: 'typedef ': ignored on left of 'NodeChuyenBay' when no variable is declared
+D:\Study\CTDL\MayBay\Main.cpp(25,12): warning C4101: 'cb': unreferenced local variable
+  Generating Code...
 D:\Study\CTDL\MayBay\mylib.h(118): warning C4172: returning address of local variable or temporary: S
 D:\Study\CTDL\MayBay\Ham.cpp(474): warning C4172: returning address of local variable or temporary: temp
 D:\Study\CTDL\MayBay\Ham.cpp(667): warning C4715: 'checkMB_DaBay': not all control paths return a value

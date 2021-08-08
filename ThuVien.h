@@ -10,7 +10,7 @@
 #define CONVE 1
 #define HETVE 2
 #define HOANTAT 3
-#define SODONG 5
+#define SODONG 6
 using namespace std; 
 const int MAX_NAM = 9999;
 const int MIN_NAM = 1800;

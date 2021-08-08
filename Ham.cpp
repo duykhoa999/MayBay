@@ -1738,9 +1738,12 @@ int chonVe(PTRChuyenBay& lstCB) {
 					Red_Highlight();
 				}
 				show_1_Ve(tempSoVe, cot, dong, chon, kc);
-				chon += SODONG;
-				cot++;
-				kc += 3;
+				if ((chon + SODONG) < lstCB->data.slVe)
+				{
+					chon += SODONG;
+					cot++;
+					kc += 3;
+				}
 				Highlight();
 				show_1_Ve(tempSoVe, cot, dong, chon, kc);
 			}
