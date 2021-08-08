@@ -19,7 +19,7 @@ const int MAX_DONG = 20;
 const int KC_GIO = 5;
 const int KC_GIOAM = 19;
 #define MAX_INPUT 255
-#define MAX_PAGE_SMALL 5
+#define MAX_PAGE_SMALL 15
 #define NAM 0
 #define NU 1
 
@@ -221,3 +221,6 @@ PTRChuyenBay ChonCB_Xuat_DSHK(PTRChuyenBay lstCB, int& chonCB, listMB lstMB, TRE
 void xuatHK_1_CB(CHUYENBAY* cb, TREEHanhKhach lstHK, int page);
 void dsHK_1_CB(PTRChuyenBay lstCB, TREEHanhKhach lstHK, listMB lstMB);
 void xuatALL_HK_1_CB(CHUYENBAY* cb, TREEHanhKhach lstHK);
+void dsVeTrong_1_CB(PTRChuyenBay lstCB, listMB lstMB);
+PTRChuyenBay ChonCB_XemVeTrong(PTRChuyenBay lstCB, listMB lstMB, int& chonCB);
+void show_VeTrong(PTRChuyenBay p);

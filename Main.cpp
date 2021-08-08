@@ -147,6 +147,11 @@ int main(int argc, char** argv) {
 			dsHK_1_CB(listCB, listHK, listMB);
 			break;
 		}
+		case 6:
+		{
+			dsVeTrong_1_CB(listCB, listMB);
+			break;
+		}
 		case 0:
 		{
 			return 0;

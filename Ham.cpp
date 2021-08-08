@@ -770,7 +770,7 @@ int checkKC_5Gio(THOI_GIAN tg1, THOI_GIAN tg2) {
 	return 0;
 }
 
-//=====================Doc ghi file MB============
+//=====================Doc ghi file============
 int loadMB(listMB& list) {
 	fstream inFile;
 	inFile.open("D:/Study/CTDL/MayBay/DATA/MayBay.txt", ios::in);
@@ -3520,6 +3520,193 @@ void dsHK_1_CB(PTRChuyenBay lstCB, TREEHanhKhach lstHK, listMB lstMB) {
 		{
 		case 1:
 			break;
+		case soItem_MenuCB:
+			exit = 0;
+			break;
+		}
+	}
+}
+
+PTRChuyenBay ChonCB_XemVeTrong(PTRChuyenBay lstCB, listMB lstMB, int& chonCB) {
+
+	Normal();
+	khungGiaoDien();
+	khungNhapThongTin(GDTHEM_CB, "", "Ma chuyen bay:", "So hieu may bay:", "San bay den:", "Ngay khoi hanh:", "Gio khoi hanh:");
+	hienHuongDan(DATVE);
+	int page = MAX_PAGE - 1;
+	int dem = 0;
+	int chon = 0;
+
+
+	showCB_DatVe(lstCB);
+	CHUYENBAY* tmpCB[300];
+	int i = 0; // so phan tu mang tam
+	chuyenMang(lstCB, tmpCB, i, lstMB, CONVE);
+	PTRChuyenBay q = new NodeChuyenBay;
+
+	Highlight();
+	show_1_CB_DatVe(tmpCB[chon], chon);
+	char tmp[20];
+	char kytu;
+
+	do
+	{
+		kytu = _getch();
+		if (kytu == -32)
+			kytu = _getch();
+		if (kytu == 0)
+			kytu = _getch();
+		switch (kytu)
+		{
+		case UP:
+			if (chon > 0 && dem > 0) {
+				Normal();
+				show_1_CB_DatVe(tmpCB[chon], dem);
+
+				chon--;
+				dem--;
+				Highlight();
+				show_1_CB_DatVe(tmpCB[chon], dem);
+			}
+			break;
+		case DOWN:
+			if (chon + 1 < i && dem + 1 < MAX_PAGE) {
+				Normal();
+				show_1_CB_DatVe(tmpCB[chon], dem);
+
+				chon++;
+				dem++;
+				Highlight();
+				show_1_CB_DatVe(tmpCB[chon], dem);
+			}
+			break;
+		case LEFT:
+			if (page > MAX_PAGE) {
+				page -= MAX_PAGE * 2;
+				chon = page;
+				dem = 0;
+				Normal();
+				xoaThongTin(XOA_CB_L);
+				for (page; page < i; page++) {
+					show_1_CB(tmpCB[page], dem);
+					if (dem == MAX_PAGE - 1) {
+						break;
+					}
+					dem++;
+				}
+				dem = 0;
+				Highlight();
+				show_1_CB(tmpCB[chon], dem);
+			}
+			break;
+		case RIGHT:
+			if (page < i) {
+				Normal();
+				xoaThongTin(XOA_CB_L);
+				page++;
+				chon = page;
+				dem = 0;
+				for (page; page < i; page++) {
+					show_1_CB(tmpCB[page], dem);
+					if (dem == MAX_PAGE - 1) {
+						break;
+					}
+					dem++;
+				}
+				page += MAX_PAGE - dem;
+				dem = 0;
+				Highlight();
+				show_1_CB(tmpCB[chon], dem);
+			}
+			break;
+		case F3:
+		{
+			tmp[0] = '\0';
+			do
+			{
+				strcpy(tmp, gdTimMa(0, "TIM CHUYEN BAY"));
+				q = searchBin_CB(lstCB, tmp);
+				if (q == NULL) {
+					Red_Highlight();
+					hienThongBao("Khong tim thay chuyen bay nay!");
+				}
+				else break;
+			} while (true);
+
+			Normal();
+			return q;
+		}
+		case ESC:
+		{
+			Normal();
+			strcpy(q->data.maChuyenBay, { "" });
+			chonCB = soItem_MenuCB;
+			return q;
+		}
+		case ENTER:
+			Normal();
+			q = searchBin_CB(lstCB, tmpCB[chon]->maChuyenBay);
+			chonCB = 1;
+			return q;
+		}
+	} while (true);
+}
+
+void show_VeTrong(PTRChuyenBay p) {
+	int chon = 0;
+	int kc = 3;
+	int n = 0;
+	int* tempSoVe = new int[p->data.slVe];
+	for (int k = 0; k < p->data.slVe; k++) {
+		tempSoVe[k] = k + 1;
+	}
+	int dong = 0;
+	int cot = 0;
+	for (int j = 0; j < p->data.slVe; j++) {
+		if (p->data.dsVe[n] != "")
+			Red_Highlight();
+
+		show_1_Ve(tempSoVe, cot, dong, n, kc);
+		Normal();
+		dong++;
+		n++;
+		if (dong == SODONG) {
+			dong = 0;
+			cot++;
+			kc += 3;
+		}
+	}
+	char kytu;
+	do
+	{
+		kytu = _getch();
+		if (kytu == ESC) {
+			return;
+		}
+	} while (true);
+
+}
+
+void dsVeTrong_1_CB(PTRChuyenBay lstCB, listMB lstMB) {
+	Normal();
+	system("cls");
+
+	int chon;
+	int exit = 1;
+
+	while (exit)
+	{
+		chon = 0;
+		PTRChuyenBay p = ChonCB_XemVeTrong(lstCB, lstMB, chon);
+		switch (chon)
+		{
+		case 1:
+		{
+			xoaKhungDS();
+			show_VeTrong(p);
+			xoaKhungDS();
+			break;
+		}
 		case soItem_MenuCB:
 			exit = 0;
 			break;
