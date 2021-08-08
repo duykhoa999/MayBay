@@ -3,6 +3,7 @@
 #include <iostream>
 #include <string>
 
+#define MAX_SOCHO 20
 #define MAX_INPUT 255
 #define MAXLIST 300
 #define MAX_PAGE 35
@@ -136,9 +137,10 @@ mayBay themMB(listMB &list);
 void xuat(mayBay mb);
 void showMotMB(listMB list, int chon, bool type, int dem);
 void showListMB(listMB list);
-
-//==========Cac ham kiem tra==========
 int checkMB_DaBay(mayBay mb, PTRChuyenBay lstCB);
+int delete_MB(listMB& listMB, int i, PTRChuyenBay lstCB);
+int hieuChinh_MB(listMB& listMB, int i);
+//==========Cac ham kiem tra==========
 int checkTime_LapCB(CHUYENBAY cb, PTRChuyenBay lstCB);
 int toTime(THOI_GIAN tg);
 int checkKC_5Gio(THOI_GIAN tg1, THOI_GIAN tg2);
@@ -150,15 +152,20 @@ PTRChuyenBay searchMaCB(PTRChuyenBay lstCB, char ma[]);
 int insertNodeCB(PTRChuyenBay& lstCB, CHUYENBAY cb);
 CHUYENBAY createCB(PTRChuyenBay lstCB, listMB list);
 int huy_CB(PTRChuyenBay& lstCB, PTRChuyenBay p);
+int xoa_CB(PTRChuyenBay& lstCB, char ma[]);
+int checkSoCho(mayBay mbCu, mayBay mbMoi);
+int checkBooked(string listVe[], int slVe);
+int hieuChinh_CB(PTRChuyenBay& lstCB, PTRChuyenBay p, listMB lstMB);
 int checkStatus_CB(CHUYENBAY cb);
 int checkTimeHienTai(THOI_GIAN tg);
 void show_1_CB(CHUYENBAY* cb, int chon);
 PTRChuyenBay searchBin_CB(PTRChuyenBay lstCB, char ma[]);
 
-//=================DOc ghi file==============
+//=================Doc ghi file==============
 int loadMB(listMB& list);
 int saveMB(listMB list);
 int loadCB(PTRChuyenBay& lstCB, listMB list);
+int saveCB(PTRChuyenBay lstCB);
 int loadHK(TREEHanhKhach& lstHK);
 
 //=============Xu li chuoi===========
