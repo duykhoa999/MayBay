@@ -16,7 +16,7 @@ void Red_Highlight() {
 	SetColor(7);
 	SetBGColor(12);
 }
-void Green_Highlight() {
+void Green_Highlight() {	
 	SetColor(7);
 	SetBGColor(10);
 }
@@ -528,7 +528,7 @@ int insertMB(listMB& list, mayBay mb) {
 }
 
 mayBay themMB(listMB &list){
-	//khungNhapThongTin(THEM_MB, "THEM MAY BAY", "So hieu may bay:", "Loai may bay:", "So day:", "So dong:");
+	khungNhapThongTin(THEM_MB, "THEM MAY BAY", "So hieu may bay:", "Loai may bay:", "So cho:", "So lan thuc hien:");
 	mayBay mb;
 	do {
 		strcpy_s(mb.soHieuMayBay, CheckInputStr(true, DONGNHAP1));
@@ -563,9 +563,9 @@ mayBay themMB(listMB &list){
 			mb.soHieuMayBay[0] = ESC;
 			return mb;
 		}
-		else if (mb.soCho > MAXLIST) {
+		else if (mb.soCho > MAX_SOCHO) {
 			Red_Highlight();
-			hienThongBao("So cho phai <=300 !!!");
+			hienThongBao("So cho phai <= 20  !!!");
 		}
 		else break;
 	} while (true);
@@ -655,8 +655,8 @@ void showListMB(listMB list) {
 		cout << list.MB[i]->soLuotThucHien;
 
 	}
-	
 }
+
 /**
 * kiem tra may bay da bay chua
 **/
@@ -666,6 +666,68 @@ int checkMB_DaBay(mayBay mb, PTRChuyenBay lstCB) {
 			return 1;
 		}
 	}
+}
+/**
+* xoa may bay, voi "i" la vi tri can xoa
+**/
+int delete_MB(listMB& listMB, int i, PTRChuyenBay lstCB) {
+	int j;
+	mayBay mb;
+	strcpy_s(mb.soHieuMayBay, listMB.MB[i]->soHieuMayBay);
+	strcpy_s(mb.loaiMayBay, listMB.MB[i]->loaiMayBay);
+	mb.soCho = listMB.MB[i]->soCho;
+	mb.soLuotThucHien = listMB.MB[i]->soLuotThucHien;
+	//kiem tra rong
+	if (checkEmptyMB(listMB)) {
+		return 0;
+	}
+	if (i == -1)
+		return 0;
+	//kiem tra may bay da bay chua
+	if (checkMB_DaBay(mb, lstCB) == 1) {
+		return 0;
+	}
+	for (j = i + 1; j < listMB.n; j++) {
+		listMB.MB[j - 1] = listMB.MB[j];
+	}
+	listMB.n--;
+	return 1;
+}
+
+int hieuChinh_MB(listMB& listMB, int i) {
+	khungNhapThongTin(HIEUCHINH_MB, "HIEU CHINH MAY BAY", "So hieu may bay:", "Sua loai may bay:", "Sua so cho");
+	mayBay mb;
+	if (i == -1)
+		return 0;
+
+	gotoxy(COT + 1, DONGNHAP1 + 2);
+	rewind(stdin);
+	cout << listMB.MB[i]->soHieuMayBay;
+	strcpy(mb.soHieuMayBay, listMB.MB[i]->soHieuMayBay);
+	gotoxy(COT + 1, DONGNHAP2 + 2);
+	cout << listMB.MB[i]->loaiMayBay;
+	strcpy(mb.loaiMayBay, listMB.MB[i]->loaiMayBay);
+
+	do
+	{
+		mb.soCho = CheckInputNum(DONGNHAP3);
+		if (mb.soCho == -1) {
+			return CANCEL;
+		}
+		else if (mb.soCho > MAX_SOCHO) {
+			Red_Highlight();
+			hienThongBao("So cho phai <= 20");
+		}
+		else break;
+
+	} while (true);
+
+
+	strcpy_s(mb.soHieuMayBay, listMB.MB[i]->soHieuMayBay);
+	strcpy_s(mb.loaiMayBay, listMB.MB[i]->loaiMayBay);
+	mb.soCho = listMB.MB[i]->soCho;
+	mb.soLuotThucHien = listMB.MB[i]->soLuotThucHien;
+	return 1;
 }
 
 int checkTime_LapCB(CHUYENBAY cb, PTRChuyenBay lstCB) {
@@ -773,9 +835,12 @@ int checkKC_5Gio(THOI_GIAN tg1, THOI_GIAN tg2) {
 }
 
 //=====================Doc ghi file MB============
+/**
+* doc file MayBay.txt
+**/
 int loadMB(listMB& list) {
 	fstream inFile;
-	inFile.open("D:/Study/CTDL/MayBay/DATA/MayBay.txt", ios::in);
+	inFile.open("C:/Users/anhse/MayBay/DATA/MayBay.txt", ios::in);
 	string temp;
 	if (inFile.is_open()) {
 		while (!inFile.eof()) {
@@ -794,9 +859,13 @@ int loadMB(listMB& list) {
 	inFile.close();
 	return 1;
 }
+
+/**
+* ghi file MayBay.txt
+**/
 int saveMB(listMB list) {
 	fstream outFile;
-	outFile.open("D:/Study/CTDL/MayBay/DATA/MayBay.txt", ios::out);
+	outFile.open("C:/Users/anhse/MayBay/DATA/MayBay.txt", ios::out);
 	int i = 0;
 	if (outFile.is_open()) {
 		while (i < list.n) {
@@ -813,13 +882,14 @@ int saveMB(listMB list) {
 	outFile.close();
 	return 1;
 }
+//***************************Doc ghi file Chuyen Bay***********************************8
 /**
-* Load file ChuyenBay.txt
+* Doc file ChuyenBay.txt
 **/
 int loadCB(PTRChuyenBay& lstCB, listMB list) {
 
 	fstream inFile;
-	inFile.open("D:/Study/CTDL/MayBay/DATA/ChuyenBay.txt", ios::in);
+	inFile.open("C:/Users/anhse/MayBay/DATA/ChuyenBay.txt", ios::in);
 	string temp;
 	string temp1 = "";
 	string ve;
@@ -867,11 +937,50 @@ int loadCB(PTRChuyenBay& lstCB, listMB list) {
 	inFile.close();
 	return 1;
 }
+/**
+* ghi file ChuyenBay.txt
+**/
+int saveCB(PTRChuyenBay lstCB) {
+	ChuyenBay cb;
+	fstream outFile;
+	outFile.open("C:/Users/anhse/MayBay/DATA/ChuyenBay.txt", ios::out);
+
+	if (outFile.is_open()) {
+		for (PTRChuyenBay p = lstCB; p != NULL; p = p->next) {
+			outFile << endl << p->data.maChuyenBay;
+			outFile << endl << p->data.soHieuMayBay;
+			outFile << endl << p->data.sanBayDen;
+			outFile << endl << p->data.tgKhoiHanh.ngay;
+			outFile << endl << p->data.tgKhoiHanh.thang;
+			outFile << endl << p->data.tgKhoiHanh.nam;
+			outFile << endl << p->data.tgKhoiHanh.gio;
+			outFile << endl << p->data.tgKhoiHanh.phut;
+			outFile << endl << p->data.trangThai;
+				
+			
+			for (int i = 0; i < p->data.slVe; i++) {
+				if (p->data.dsVe[i] != "")
+					outFile << endl<< i << "-" << p->data.dsVe[i];
+			}
+			if (p->next == NULL)
+				outFile << endl;
+			if (p->next != NULL) {
+				outFile << endl;
+				outFile << endl;
+			}
+
+		}
+	}
+	else
+		return 0;
+	outFile.close();
+	return 1;
+}
 
 //======================Doc ghi file Hanh khach==============
 int loadHK(TREEHanhKhach& lstHK) {
 	fstream inFile;
-	inFile.open("D:/Study/CTDL/MayBay/DATA/HanhKhach.txt", ios::in);
+	inFile.open("C:/Users/anhse/MayBay/DATA/HanhKhach.txt", ios::in);
 	HANHKHACH hk;
 	string temp;
 	char phai[4];
@@ -914,7 +1023,7 @@ void duyetCay(TREEHanhKhach lstHK, fstream& file) {
 }
 int saveHK(TREEHanhKhach lstHK) {
 	fstream outFile;
-	outFile.open("D:/Study/CTDL/MayBay/DATA/HanhKhach.txt", ios::out);
+	outFile.open("C:/Users/anhse/MayBay/DATA/HanhKhach.txt", ios::out);
 	if (!outFile.fail()) {
 		duyetCay(lstHK, outFile);
 	}
@@ -967,7 +1076,7 @@ int insertNodeCB(PTRChuyenBay& lstCB, CHUYENBAY cb) {
 * tao chuyen bay
 **/
 CHUYENBAY createCB(PTRChuyenBay lstCB, listMB list) {
-	//khungNhapThongTin(GDTHEM_CB, "THEM CHUYEN BAY", "Ma chuyen bay:", "So hieu may bay:", "San bay den:", "Ngay khoi hanh:", "Gio khoi hanh:");
+	khungNhapThongTin(GDTHEM_CB, "THEM CHUYEN BAY", "Ma chuyen bay:", "So hieu may bay:", "San bay den:", "Ngay khoi hanh:", "Gio khoi hanh:");
 	CHUYENBAY cb;
 	PTRChuyenBay p;
 
@@ -1084,6 +1193,180 @@ ChonMayBay:
 	cb.trangThai = CONVE;
 
 	return cb;
+}
+/**
+* xoa chuyen bay
+**/
+int xoa_CB(PTRChuyenBay& lstCB, char ma[]) {
+	PTRChuyenBay p = lstCB;
+	if (empty_CB(lstCB))
+		return 0;
+	if (_stricmp(lstCB->data.maChuyenBay, ma) == 0) {
+		p = lstCB;
+		p = p->next;
+		delete p;
+		return 1;
+	}
+	else {
+		for (p = p; p->next != NULL && _stricmp(p->next->data.maChuyenBay, ma) != 0; p = p->next);
+		if (p->next != NULL) {
+			PTRChuyenBay q = p->next;
+			p->next = q->next;
+			delete q;
+			return 1;
+		}
+		else return 0;
+	}
+
+}
+/**
+* kiem tra nhap lieu cua so cho
+**/
+int checkSoCho(mayBay mbCu, mayBay mbMoi) {
+	if (mbMoi.soCho < mbCu.soCho) {
+		Red_Highlight();
+		hienThongBao("So cho phai >= so cho may bay cu");
+		return 1;
+	}
+	return 0;
+}
+
+int checkBooked(string listVe[], int slVe) {
+	for (int i = 0; i < slVe; i++) {
+		if (listVe[i] != "") {
+			return 1;
+		}
+	}
+	return 0;
+}
+
+/**
+* Sua chuyen bay
+**/
+int hieuChinh_CB(PTRChuyenBay& lstCB, PTRChuyenBay p, listMB lstMB) {
+	khungNhapThongTin(GDTHEM_CB, "HIEU CHINH CHUYEN BAY", "Ma chuyen bay:", "So hieu may bay:", "San bay den:", "Ngay khoi hanh:", "Gio khoi hanh:");
+	ChuyenBay cb;
+	if (p == NULL)
+	{
+		return 0;
+	}
+	mayBay mbCu = getMB(lstMB, p->data.soHieuMayBay);
+	gotoxy(COT + 1, DONGNHAP1 + 2);
+
+	rewind(stdin);
+	cout << p->data.maChuyenBay;
+	strcpy(cb.maChuyenBay, p->data.maChuyenBay);
+	gotoxy(COT + 1, DONGNHAP3 + 2);
+	cout << p->data.sanBayDen;
+	strcpy(cb.sanBayDen, p->data.sanBayDen);
+	cb.trangThai = p->data.trangThai;
+
+	//ChonMayBay:
+	do {
+		do
+		{
+			// chon may bay tren giao dien
+			mayBay chonMB;
+			chonMB = ChonMB_LapCB(lstMB);
+			strcpy(cb.soHieuMayBay, chonMB.soHieuMayBay);
+			// tim may bay bang cach nhap
+			if (chonMB.soHieuMayBay[0] == '\0') {
+				strcpy(cb.soHieuMayBay, CheckInputStr(true, DONGNHAP2));
+
+				chonMB = getMB(lstMB, cb.soHieuMayBay);
+				if (chonMB.soHieuMayBay[0] == '\0') {
+					Red_Highlight();
+					hienThongBao("Khong co may bay nao mang so hieu nay!");
+					continue;
+				}
+				else if (cb.soHieuMayBay[0] == ESC) {
+					cb.maChuyenBay[0] = ESC;
+					return 0;
+				}
+				else {
+					if (!checkSoCho(mbCu, chonMB)) {
+						delete[] cb.dsVe;
+						cb.dsVe = new string[chonMB.soCho];
+						cb.slVe = chonMB.soCho;
+						for (int i = 0; i < cb.slVe; i++) {
+							cb.dsVe[i] = "";
+						}
+						break;
+					}
+
+				}
+
+			}
+
+		} while (true);
+
+		if (!checkBooked(p->data.dsVe, p->data.slVe)) {
+			do
+			{
+				strcpy(cb.sanBayDen, CheckInputStr(false, DONGNHAP3));
+				if (cb.sanBayDen[0] == ESC) {
+					return 0;
+				}
+				else
+					break;
+			} while (true);
+		}
+
+		do
+		{
+			cb.tgKhoiHanh = CheckInputDate(cb.tgKhoiHanh, DONGNHAP4);
+			if (cb.tgKhoiHanh.ngay == -1 || cb.tgKhoiHanh.thang == -1 || cb.tgKhoiHanh.nam == -1) {
+
+				return 0;
+			}
+			if (rangBuocThoiGian(cb.tgKhoiHanh) == -1)
+			{
+				break;
+			}
+			else
+			{
+				gotoxy(COT + 1, DONGNHAP4 + 2);
+				cout << "  ";
+				gotoxy(COT + DAIKHUNGNHO + 1, DONGNHAP4 + 2);
+				cout << "  ";
+				gotoxy(COT + DAIKHUNGNHO * 2 + 1, DONGNHAP4 + 2);
+				cout << "    ";
+			}
+		} while (true);
+
+		do
+		{
+			cb.tgKhoiHanh = CheckInputTime(cb.tgKhoiHanh, DONGNHAP5);
+			if (cb.tgKhoiHanh.gio == -1 || cb.tgKhoiHanh.phut == -1) {
+
+				return 0;
+			}
+			if (rangBuocGio(cb.tgKhoiHanh) == -1)
+			{
+				break;
+			}
+			else
+			{
+				gotoxy(COT + 1, DONGNHAP5 + 2);
+				cout << "  ";
+				gotoxy(COT + DAIKHUNGNHO + 1, DONGNHAP5 + 2);
+				cout << "  ";
+			}
+		} while (true);
+
+		// xet gio lap chuyen bay 
+		if (checkTime_LapCB(cb, lstCB)) {
+			Red_Highlight();
+			hienThongBao("May bay nay phai cat canh sau 5h nua! Hay chon may bay khac");
+			//goto ChonMayBay;
+
+		}
+		else break;
+	} while (true);
+
+	p->data = cb;
+
+	return 1;
 }
 
 /**

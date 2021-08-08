@@ -23,34 +23,34 @@ int main(int argc, char** argv) {
 	TREEHanhKhach listHK;
 	PTRChuyenBay listCB;
 	CHUYENBAY cb;
-	init_HK(listHK);
-	initCB(listCB);
+	//init_HK(listHK);
+	//initCB(listCB);
 
-	int loadhk = loadHK(listHK);
-	int checkLoad = loadCB(listCB, listMB);
+	//int loadhk = loadHK(listHK);
+	//int checkLoad = loadCB(listCB, listMB);
 
 	//int checkLoadFileCB = loadCB(listCB, list);
 	//if (checkLoadFileCB == 1)
 	//	hienThongBao("Doc file thanh cong");
 	//else hienThongBao("Doc file that bai");
 
-	strcpy_s(mb.soHieuMayBay, "VN01");
-	strcpy_s(mb.loaiMayBay, "Boeing");
-	mb.soCho = 20;
-	mb.soLuotThucHien = 0;
-	insertMB(listMB, mb);
+	//strcpy_s(mb.soHieuMayBay, "VN01");
+	//strcpy_s(mb.loaiMayBay, "Boeing");
+	//mb.soCho = 20;
+	//mb.soLuotThucHien = 0;
+	//insertMB(listMB, mb);
 
-	strcpy_s(mb.soHieuMayBay, "VN02");
-	strcpy_s(mb.loaiMayBay, "Airbus");
-	mb.soCho = 25;
-	mb.soLuotThucHien = 0;
-	insertMB(listMB, mb);
+	//strcpy_s(mb.soHieuMayBay, "VN02");
+	//strcpy_s(mb.loaiMayBay, "Airbus");
+	//mb.soCho = 25;
+	//mb.soLuotThucHien = 0;
+	//insertMB(listMB, mb);
 
-	strcpy_s(mb.soHieuMayBay, "VN03");
-	strcpy_s(mb.loaiMayBay, "Airbus");
-	mb.soCho = 17;
-	mb.soLuotThucHien = 0;
-	insertMB(listMB, mb);
+	//strcpy_s(mb.soHieuMayBay, "VN03");
+	//strcpy_s(mb.loaiMayBay, "Airbus");
+	//mb.soCho = 17;
+	//mb.soLuotThucHien = 0;
+	//insertMB(listMB, mb);
 
 
 	/*strcpy_s(cb.maChuyenBay, "CB01");
@@ -97,29 +97,28 @@ int main(int argc, char** argv) {
 		case 1:
 
 		{
-			int checkLoad = loadCB(listCB, listMB);
-			if (checkLoad == 1) {
-				hienThongBao(listCB->data.dsVe[2]);
-				hienThongBao("load thanh cong");
-			}
-			else hienThongBao("load that bai");
-			break;
-			/*mayBay mb = themMB(list);
-			if (mb.soHieuMayBay[0] == ESC) {
-				break;
-			}
-			int checkInsert = insertMB(list, mb);
+			//int checkLoad = loadCB(listCB, listMB);
+			//if (checkLoad == 1) {
+			//	hienThongBao(listCB->data.dsVe[2]);
+			//	hienThongBao("load thanh cong");
+			//}
+			//else hienThongBao("load that bai");
+			//break;
+			//mayBay mb = themMB(listMB);
+			//if (mb.soHieuMayBay[0] == ESC) {
+			//	break;
+			//}
+			int checkInsert = insertMB(listMB, mb);
 			if (checkInsert == 1) {
 				hienThongBao("Them thanh cong !!");
-				showListMB(list);
-				int checkSave = saveMB(list);
+				showListMB(listMB);
+				int checkSave = saveMB(listMB);
 				if (checkSave == 1) hienThongBao("Save file thanh cong");
 				else hienThongBao("save file that bai");
 			}
 			else
-				hienThongBao("Them that bai!!!");*/
+				hienThongBao("Them that bai!!!");
 				//hienThongBao("Chon 1", "Chon 2", "Chon 3", "Chon 4");
-			break;
 			/*QLMB(lstMB, lstCB);
 			break;*/
 		}
@@ -139,12 +138,12 @@ int main(int argc, char** argv) {
 		}
 		case 3:
 		{
-			DatHuyVe(listCB, listMB, listHK);
+			//DatHuyVe(listCB, listMB, listHK);
 			break;
 		}
 		case 4:
 		{
-			dsHK_1_CB(listCB, listHK, listMB);
+			//dsHK_1_CB(listCB, listHK, listMB);
 			break;
 		}
 		case 0:
