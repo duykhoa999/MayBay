@@ -227,9 +227,9 @@ void khungXuatDS(int type, int rong, int dai, int colump1, int colump2, int colu
 		gotoxy(COTDS_L + 26, DONGDS_U + 1);
 		cout << "LOAI MAY BAY";
 		gotoxy(COTDS_L + 71, DONGDS_U + 1);
-		cout << "SO CHO";
+		cout << "SO CHO";/*
 		gotoxy(COTDS_L + 94, DONGDS_U + 1);
-		cout << "SO LUOT THUC HIEN";
+		cout << "SO LUOT THUC HIEN";*/
 	}
 	else if (type == XUAT_CB) {
 		// 5, 25, 45, 80, 100
@@ -492,9 +492,9 @@ int checkFullMB(listMB list) {
 **/
 int searchMB(listMB list, char maMB[]) {
 	for (int i = 0; i < list.n; i++) {
-		if (strcmp(list.MB[i]->soHieuMayBay, maMB) == 0) return 1;
+		if (strcmp(list.MB[i]->soHieuMayBay, maMB) == 0) return i;
 	}
-	return 0;
+	return -1;
 }
 
 mayBay ChonMB_Edit(listMB lstMB, int& chonMB) {
@@ -502,7 +502,7 @@ mayBay ChonMB_Edit(listMB lstMB, int& chonMB) {
 	mayBay tmp;
 	Normal();
 	khungGiaoDien();
-	khungNhapThongTin(THEM_MB, "THEM MAY BAY", "So hieu may bay:", "Loai may bay:", "So cho:", "So luot thuc hien:");
+	khungNhapThongTin(THEM_MB, "THEM MAY BAY", "So hieu may bay:", "Loai may bay:", "So cho:");
 	hienHuongDan(1);
 	int page = MAX_PAGE - 1;
 	int dem = 0;
@@ -752,7 +752,6 @@ mayBay getMB(listMB list, char ma[]) {
 			strcpy_s(maybay.soHieuMayBay, list.MB[i]->soHieuMayBay);
 			strcpy_s(maybay.loaiMayBay, list.MB[i]->loaiMayBay);
 			maybay.soCho = list.MB[i]->soCho;
-			maybay.soLuotThucHien = list.MB[i]->soLuotThucHien;
 			return maybay;
 		}
 	}
@@ -813,7 +812,6 @@ mayBay themMB(listMB &list){
 		}
 		else break;
 	} while (true);
-	mb.soLuotThucHien = 0;
 	return mb;
 }
 /**
@@ -823,7 +821,6 @@ void xuat(mayBay mb) {
 	cout << mb.soHieuMayBay;
 	cout << mb.loaiMayBay;
 	cout << mb.soCho;
-	cout << mb.soLuotThucHien;
 }
 /**
 * show mot may bay voi vi tri can tim
@@ -849,11 +846,6 @@ void showMotMB(listMB list, int chon, bool type, int dem) {
 	gotoxy(COTDS_L + 70, DONGDS_U + 3 + dem);
 	cout << char(DOC);
 
-	gotoxy(COTDS_L + 94, DONGDS_U + 3 + dem);
-	cout << list.MB[chon]->soLuotThucHien;
-	gotoxy(COTDS_L + 93, DONGDS_U + 3 + dem);
-	cout << char(DOC);
-
 	Normal();
 	if (type == true) {
 		gotoxy(COT + 1, DONGNHAP1 + 2);
@@ -871,9 +863,6 @@ void showMotMB(listMB list, int chon, bool type, int dem) {
 		gotoxy(COT + 1, DONGNHAP3 + 2);
 		cout << list.MB[chon]->soCho;
 		gotoxy(COT + 1, DONGNHAP4 + 2);
-		cout << "                      ";
-		gotoxy(COT + 1, DONGNHAP4 + 2);
-		cout << list.MB[chon]->soLuotThucHien;
 	}
 
 }
@@ -883,10 +872,10 @@ void showMotMB(listMB list, int chon, bool type, int dem) {
 * xuat list may bay
 **/
 void showListMB(listMB list, int page) {
-	khungXuatDS(XUAT_MB, DONGDS_D - DONGDS_U, COTDS_R - COTDS_L, 5, 25, 70, 93);
+	khungXuatDS(XUAT_MB, DONGDS_D - DONGDS_U, COTDS_R - COTDS_L, 5, 25, 70);
 	int i = page, pageMB = page, dem = 0;
 	for (i, pageMB; pageMB < list.n; pageMB++, i++) {
-		//5, 25, 70, 93
+		//5, 25, 70
 		gotoxy(COTDS_L + 1, DONGDS_U + 3 + i);
 		cout << i + 1;
 		gotoxy(COTDS_L + 6, DONGDS_U + 3 + i);
@@ -895,8 +884,6 @@ void showListMB(listMB list, int page) {
 		cout << list.MB[i]->loaiMayBay;
 		gotoxy(COTDS_L + 71, DONGDS_U + 3 + i);
 		cout << list.MB[i]->soCho;
-		gotoxy(COTDS_L + 94, DONGDS_U + 3 + i);
-		cout << list.MB[i]->soLuotThucHien;
 		dem++;
 		if (dem == MAX_PAGE) {
 			break;
@@ -919,11 +906,8 @@ int checkMB_DaBay(mayBay mb, PTRChuyenBay lstCB) {
 **/
 int delete_MB(listMB& listMB, int i, PTRChuyenBay lstCB) {
 	int j;
-	mayBay mb;
-	strcpy_s(mb.soHieuMayBay, listMB.MB[i]->soHieuMayBay);
-	strcpy_s(mb.loaiMayBay, listMB.MB[i]->loaiMayBay);
-	mb.soCho = listMB.MB[i]->soCho;
-	mb.soLuotThucHien = listMB.MB[i]->soLuotThucHien;
+	mayBay mb = getMB(listMB, listMB.MB[i]->soHieuMayBay);
+
 	//kiem tra rong
 	if (checkEmptyMB(listMB)) {
 		return 0;
@@ -953,7 +937,10 @@ int hieuChinh_MB(listMB& listMB, int i) {
 	strcpy(mb.soHieuMayBay, listMB.MB[i]->soHieuMayBay);
 	gotoxy(COT + 1, DONGNHAP2 + 2);
 	cout << listMB.MB[i]->loaiMayBay;
-	strcpy(mb.loaiMayBay, listMB.MB[i]->loaiMayBay);
+	//strcpy(mb.loaiMayBay, listMB.MB[i]->loaiMayBay);
+
+	strcpy_s(mb.loaiMayBay, CheckInputStr(false, DONGNHAP2));
+
 
 	do
 	{
@@ -970,10 +957,10 @@ int hieuChinh_MB(listMB& listMB, int i) {
 	} while (true);
 
 
-	strcpy_s(mb.soHieuMayBay, listMB.MB[i]->soHieuMayBay);
-	strcpy_s(mb.loaiMayBay, listMB.MB[i]->loaiMayBay);
-	mb.soCho = listMB.MB[i]->soCho;
-	mb.soLuotThucHien = listMB.MB[i]->soLuotThucHien;
+	strcpy_s(listMB.MB[i]->soHieuMayBay, mb.soHieuMayBay);
+	strcpy_s(listMB.MB[i]->loaiMayBay, mb.loaiMayBay);
+	listMB.MB[i]->soCho = mb.soCho;
+
 	return 1;
 }
 
@@ -1093,7 +1080,6 @@ int loadMB(listMB& list) {
 			inFile.getline(list.MB[list.n]->soHieuMayBay, 20);
 			inFile.getline(list.MB[list.n]->loaiMayBay, 45);
 			inFile >> list.MB[list.n]->soCho;
-			inFile >> list.MB[list.n ]->soLuotThucHien;
 			list.n++;
 		}
 	}
@@ -1116,7 +1102,6 @@ int saveMB(listMB list) {
 			outFile << endl << list.MB[i]->soHieuMayBay;
 			outFile << endl << list.MB[i]->loaiMayBay;
 			outFile << endl << list.MB[i]->soCho;
-			outFile << endl << list.MB[i]->soLuotThucHien;
 			i++;
 		}
 	}
@@ -4182,8 +4167,6 @@ mayBay ChonMB_LapCB(listMB list) {
 				strcpy_s(maybay.soHieuMayBay, list.MB[chon]->soHieuMayBay);
 				strcpy_s(maybay.loaiMayBay, list.MB[chon]->loaiMayBay);
 				maybay.soCho = list.MB[chon]->soCho;
-				maybay.soLuotThucHien = list.MB[chon]->soLuotThucHien;
-
 				return maybay;
 			}
 		}

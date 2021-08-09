@@ -31,10 +31,6 @@ struct maybay {
 	char soHieuMayBay[20];
 	char loaiMayBay[45];
 	int soCho;
-
-	//Chi so phu
-	int soLuotThucHien = 0;
-
 };
 typedef struct maybay mayBay;
 typedef struct maybay* nodeMayBay;
