@@ -19,7 +19,6 @@ Bui
 Duy Khoa
 Nam
 
-<<<<<<< HEAD
 04655486546
 Khoa
 Bui
@@ -40,8 +39,6 @@ Khoa
 Bui
 Nam
 
-=======
->>>>>>> 4c309b354935c1490122fc2ccd35fd354a34aaba
 188714521
 Le Van
 Phu
@@ -180,64 +177,4 @@ Nu
 986419720
 Pham Ba
 Loc
-Nam
-
-Asd
-Asd
-Asd
-Nam
-
-Ap
-D
-D
-Nam
-
-Ffff
-A
-S
-Nam
-
-Fdafsp
-Sdfa
-Dasf
-Nam
-
-Asdasd
-Asdasd
-Asdas
-Nam
-
-Asdasdasd
-Sdadasd
-Asdasd
-Nam
-
-Xczv
-Vcvx
-Cvz
-Nam
-
-Ghjghj
-Ghjghj
-Ghjgh
-Nam
-
-Rtytryrt
-Rtytry
-Rtyrty
-Nam
-
-Rtyrtyrty
-Rtyrty
-Rtyrty
-Nam
-
-Werqwerq
-Qwerqwer
-Qwerqwer
-Nam
-
-Zxczxc
-Xzczxc
-Zxczxc
 Nam

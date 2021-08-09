@@ -160,7 +160,6 @@ void khungNhapThongTin(int type, string title, string s1, string s2, string s3, 
 		else {
 			gotoxy(COT, DONGNHAP4);
 			cout << s4;
-			veKhungNhap(DAIKHUNG, RONGKHUNG, COT, DONGNHAP4 + 1);
 		}
 
 	}
@@ -228,9 +227,9 @@ void khungXuatDS(int type, int rong, int dai, int colump1, int colump2, int colu
 		gotoxy(COTDS_L + 26, DONGDS_U + 1);
 		cout << "LOAI MAY BAY";
 		gotoxy(COTDS_L + 71, DONGDS_U + 1);
-		cout << "SO DAY";
+		cout << "SO CHO";
 		gotoxy(COTDS_L + 94, DONGDS_U + 1);
-		cout << "SO DONG";
+		cout << "SO LUOT THUC HIEN";
 	}
 	else if (type == XUAT_CB) {
 		// 5, 25, 45, 80, 100
@@ -407,7 +406,7 @@ void hienThongBao(string notif, string notif2, string notif3, string NoiDen) {
 		gotoxy(COT + 10, DONGDS_D + 2);
 		cout << notif3;
 	}
-	Sleep(1500);
+	Sleep(1000);
 	Normal();
 	gotoxy(COT + 1, DONGDS_D);
 	cout << "                                                           ";
@@ -493,9 +492,256 @@ int checkFullMB(listMB list) {
 **/
 int searchMB(listMB list, char maMB[]) {
 	for (int i = 0; i < list.n; i++) {
-		if (strcmp(list.MB[i]->soHieuMayBay, maMB)) return 1;
+		if (strcmp(list.MB[i]->soHieuMayBay, maMB) == 0) return 1;
 	}
 	return 0;
+}
+
+mayBay ChonMB_Edit(listMB lstMB, int& chonMB) {
+	xoaKhungDS();
+	mayBay tmp;
+	Normal();
+	khungGiaoDien();
+	khungNhapThongTin(THEM_MB, "THEM MAY BAY", "So hieu may bay:", "Loai may bay:", "So cho:", "So luot thuc hien:");
+	hienHuongDan(1);
+	int page = MAX_PAGE - 1;
+	int dem = 0;
+	int chon = 0;
+	int i;
+	showListMB(lstMB, 0);
+	Highlight();
+	showMotMB(lstMB, chon, true, dem);
+	char kytu;
+	do
+	{
+		kytu = _getch();
+		if (kytu == -32)
+			kytu = _getch();
+		if (kytu == 0)
+			kytu = _getch();
+		switch (kytu)
+		{
+		case UP:
+			if (chon > 0 && dem > 0) {
+				Normal();
+				showMotMB(lstMB, chon, true, dem);
+
+				chon--;
+				dem--;
+				Highlight();
+				showMotMB(lstMB, chon, true, dem);
+			}
+			break;
+		case DOWN:
+			if (chon + 1 < lstMB.n && dem + 1 < MAX_PAGE) {
+				Normal();
+				showMotMB(lstMB, chon, true, dem);
+
+				chon++;
+				dem++;
+				Highlight();
+				showMotMB(lstMB, chon, true, dem);
+			}
+			break;
+		case LEFT:
+			if (page > MAX_PAGE) {
+				Normal();
+				page -= MAX_PAGE * 2;
+				chon = page;
+				dem = 0;
+				xoaThongTin(XOA_MB);
+				for (page; page < lstMB.n; page++) {
+					showMotMB(lstMB, page, true, dem);
+					if (dem == MAX_PAGE - 1) {
+						break;
+					}
+					dem++;
+				}
+				dem = 0;
+				Highlight();
+				showMotMB(lstMB, chon, true, dem);
+			}
+			break;
+		case RIGHT:
+			if (page < lstMB.n) {
+				Normal();
+				xoaThongTin(XOA_MB);
+				page++;
+				chon = page;
+				dem = 0;
+				for (page; page < lstMB.n; page++) {
+					showMotMB(lstMB, page, true, dem);
+					if (dem == MAX_PAGE - 1) {
+						break;
+					}
+					dem++;
+				}
+				page += MAX_PAGE - dem;
+				dem = 0;
+				Highlight();
+				showMotMB(lstMB, chon, true, dem);
+			}
+			break;
+		case F2:
+			chonMB = THEM_MB;
+			tmp.soHieuMayBay[0] = '\0';
+			return tmp;
+		case DELETE:
+		{
+			int xacNhan = confirm("DONG Y", "HUY", false);
+			if (xacNhan == YES) {
+				chonMB = XOA_MB;
+				return *lstMB.MB[chon];
+			}
+			else
+				break;
+		}
+		case F3:
+		{
+			tmp.soHieuMayBay[0] = '\0';
+			int tontai = -1;
+			do
+			{
+				strcpy(tmp.soHieuMayBay, gdTimMa(0, "TIM MAY BAY"));
+				if (tmp.soHieuMayBay[0] == ESC)
+				{
+					Red_Highlight();
+					hienThongBao("Da huy tim kiem!");
+					return tmp;
+				}
+				tontai = searchMB(lstMB, tmp.soHieuMayBay);
+				if (tontai == -1) {
+					Red_Highlight();
+					hienThongBao("Khong tim thay so hieu nay!");
+
+				}
+				else break;
+			} while (true);
+			chonMB = confirm("HIEU CHINH", "XOA", false);
+			if (chonMB == XOA_MB) {
+				int xacNhan = confirm("DONG Y", "HUY", false);
+				if (xacNhan == YES) {
+					chonMB = XOA_MB;
+					return tmp;
+				}
+				else
+					break;
+			}
+			else if (chonMB == CANCEL)
+				break;
+			Normal();
+			return tmp;
+		}
+		case ESC:
+		{
+			Normal();
+			tmp.soHieuMayBay[0] = '\0';
+			chonMB = soItem_MenuMB;
+			return tmp;
+		}
+		case ENTER:
+		{
+			Normal();
+			chonMB = confirm("HIEU CHINH", "XOA", false);
+			if (chonMB == NO) {
+				int xacNhan = confirm("DONG Y", "HUY", false);
+				if (xacNhan == YES) {
+					chonMB = XOA_MB;
+					return *lstMB.MB[chon];
+				}
+				else
+					break;
+			}
+			else if (chonMB == CANCEL)
+				break;
+			return *lstMB.MB[chon];
+		}
+		}
+	} while (true);
+}
+
+void QLMB(listMB& lstMB, PTRChuyenBay lstCB) {
+	int chonMB;
+	int exit1 = 1;
+	Normal();
+	system("cls");
+	mayBay tmp;
+	while (exit1) {
+		showListMB(lstMB, 0);
+		chonMB = 0;
+		tmp = ChonMB_Edit(lstMB, chonMB);
+		switch (chonMB)
+		{
+			case THEM_MB:
+			{
+				mayBay mb = themMB(lstMB);
+				if (mb.soHieuMayBay[0] == ESC)
+				{
+					Red_Highlight();
+					hienThongBao("Da huy nhap!");
+					break;
+				}
+				int themMB = insertMB(lstMB, mb);
+				if (themMB == 1) {
+					Green_Highlight();
+					hienThongBao("Them thanh cong!");
+					int save = saveMB(lstMB);
+				}
+				else {
+					Red_Highlight();
+					hienThongBao("Them that bai!");
+				}
+				Normal();
+				system("cls");
+				break;
+
+			}
+			case HIEUCHINH_MB:
+			{
+				int tontai = -1;
+				tontai = searchMB(lstMB, tmp.soHieuMayBay);
+
+				int sua = hieuChinh_MB(lstMB, tontai);
+				if (sua == 1) {
+					Green_Highlight();
+					hienThongBao("Hieu chinh thanh cong!");
+					int save = saveMB(lstMB);
+				}
+				else {
+					Red_Highlight();
+					hienThongBao("Da huy!");
+				}
+				Normal();
+				system("cls");
+				break;
+
+			}
+			case XOA_MB:
+			{
+				int tontai = -1;
+				tontai = searchMB(lstMB, tmp.soHieuMayBay);
+				int xoa = delete_MB(lstMB, tontai, lstCB);
+				if (xoa == 1) {
+					Green_Highlight();
+					hienThongBao("Xoa thanh cong!");
+					int save = saveMB(lstMB);
+				}
+				else {
+					Red_Highlight();
+					hienThongBao("May bay da lap chuyen bay khong the xoa!");
+				}
+				Normal();
+				system("cls");
+				break;
+
+			}
+			case soItem_MenuMB:
+			{
+				exit1 = 0;
+				break;
+			}
+		}
+	}
 }
 
 mayBay getMB(listMB list, char ma[]) {
@@ -526,7 +772,7 @@ int insertMB(listMB& list, mayBay mb) {
 }
 
 mayBay themMB(listMB &list){
-	khungNhapThongTin(THEM_MB, "THEM MAY BAY", "So hieu may bay:", "Loai may bay:", "So cho:", "So lan thuc hien:");
+	khungNhapThongTin(THEM_MB, "THEM MAY BAY", "So hieu may bay:", "Loai may bay:", "So cho:");
 	mayBay mb;
 	do {
 		strcpy_s(mb.soHieuMayBay, CheckInputStr(true, DONGNHAP1));
@@ -561,9 +807,9 @@ mayBay themMB(listMB &list){
 			mb.soHieuMayBay[0] = ESC;
 			return mb;
 		}
-		else if (mb.soCho > MAX_SOCHO) {
+		else if (mb.soCho < MAX_SOCHO) {
 			Red_Highlight();
-			hienThongBao("So cho phai <= 20  !!!");
+			hienThongBao("So cho phai >= 20  !!!");
 		}
 		else break;
 	} while (true);
@@ -636,10 +882,10 @@ void showMotMB(listMB list, int chon, bool type, int dem) {
 /**
 * xuat list may bay
 **/
-void showListMB(listMB list) {
+void showListMB(listMB list, int page) {
 	khungXuatDS(XUAT_MB, DONGDS_D - DONGDS_U, COTDS_R - COTDS_L, 5, 25, 70, 93);
-
-	for (int i = 0; i < MAX_PAGE; i++) {
+	int i = page, pageMB = page, dem = 0;
+	for (i, pageMB; pageMB < list.n; pageMB++, i++) {
 		//5, 25, 70, 93
 		gotoxy(COTDS_L + 1, DONGDS_U + 3 + i);
 		cout << i + 1;
@@ -651,7 +897,10 @@ void showListMB(listMB list) {
 		cout << list.MB[i]->soCho;
 		gotoxy(COTDS_L + 94, DONGDS_U + 3 + i);
 		cout << list.MB[i]->soLuotThucHien;
-
+		dem++;
+		if (dem == MAX_PAGE) {
+			break;
+		}
 	}
 }
 
@@ -712,9 +961,9 @@ int hieuChinh_MB(listMB& listMB, int i) {
 		if (mb.soCho == -1) {
 			return CANCEL;
 		}
-		else if (mb.soCho > MAX_SOCHO) {
+		else if (mb.soCho < MAX_SOCHO) {
 			Red_Highlight();
-			hienThongBao("So cho phai <= 20");
+			hienThongBao("So cho phai >= 20");
 		}
 		else break;
 
@@ -951,6 +1200,7 @@ int saveCB(PTRChuyenBay lstCB) {
 			outFile << endl << p->data.tgKhoiHanh.gio;
 			outFile << endl << p->data.tgKhoiHanh.phut;
 			outFile << endl << p->data.trangThai;
+			outFile << endl << p->data.slVe;
 				
 			
 			for (int i = 0; i < p->data.slVe; i++) {
@@ -1051,6 +1301,376 @@ PTRChuyenBay searchMaCB(PTRChuyenBay lstCB, char ma[]) {
 			return p;
 	}
 	return NULL;
+}
+
+void showCB(PTRChuyenBay lstCB) {
+	khungXuatDS(XUAT_CB, DONGDS_D - DONGDS_U, COTDS_R - COTDS_L, 5, 25, 45, 80, 100);
+
+	int i = 0;
+	for (PTRChuyenBay p = lstCB; p != NULL; p = p->next) {
+		gotoxy(COTDS_L + 1, DONGDS_U + 3 + i);
+		cout << i + 1;
+		gotoxy(COTDS_L + 6, DONGDS_U + 3 + i);
+		cout << p->data.maChuyenBay;
+		gotoxy(COTDS_L + 26, DONGDS_U + 3 + i);
+		cout << p->data.soHieuMayBay;
+		gotoxy(COTDS_L + 46, DONGDS_U + 3 + i);
+		cout << p->data.sanBayDen;
+		gotoxy(COTDS_L + 81, DONGDS_U + 3 + i);
+		cout << p->data.tgKhoiHanh.ngay << "/" << p->data.tgKhoiHanh.thang << "/" << p->data.tgKhoiHanh.nam
+			<< " " << p->data.tgKhoiHanh.gio << ":" << p->data.tgKhoiHanh.phut;
+		gotoxy(COTDS_L + 101, DONGDS_U + 3 + i);
+		if (p->data.trangThai == 0)
+			cout << "Da huy";
+		else if (p->data.trangThai == 1)
+			cout << "Con ve";
+		else if (p->data.trangThai == 2)
+			cout << "Het ve";
+		else if (p->data.trangThai == 3)
+			cout << "Hoan tat";
+		i++;
+		if (i == MAX_PAGE)
+			break;
+	}
+
+}
+
+PTRChuyenBay ChonCB_Edit(PTRChuyenBay lstCB, listMB lstMB, int& chonCB) {
+
+	Normal();
+	khungGiaoDien();
+	khungNhapThongTin(GDTHEM_CB, "THEM CHUYEN BAY", "Ma chuyen bay:", "So hieu may bay:", "San bay den:", "Ngay khoi hanh:", "Gio khoi hanh:");
+	hienHuongDan(1);
+	int chon = 0;
+	int page = MAX_PAGE - 1;
+	int dem = 0;
+	showCB(lstCB);
+
+	CHUYENBAY* tmpCB[300];
+	int i = 0; // so phan tu cua mang tam
+	chuyenMang(lstCB, tmpCB, i, lstMB, 0);
+
+	PTRChuyenBay q = new NodeChuyenBay;
+	Highlight();
+	show_1_CB(tmpCB[chon], chon);
+	char tmp[20];
+	char kytu;
+	do
+	{
+		kytu = _getch();
+		if (kytu == -32)
+			kytu = _getch();
+		if (kytu == 0)
+			kytu = _getch();
+		switch (kytu)
+		{
+		case UP:
+			if (chon > 0 && dem > 0) {
+				Normal();
+				show_1_CB(tmpCB[chon], dem);
+
+				chon--;
+				dem--;
+				Highlight();
+				show_1_CB(tmpCB[chon], dem);
+			}
+			break;
+		case DOWN:
+			if (chon + 1 < i && dem + 1 < MAX_PAGE) {
+				Normal();
+				show_1_CB(tmpCB[chon], dem);
+
+				chon++;
+				dem++;
+				Highlight();
+				show_1_CB(tmpCB[chon], dem);
+			}
+			break;
+		case LEFT:
+			if (page > MAX_PAGE) {
+				Normal();
+				page -= MAX_PAGE * 2;
+				chon = page;
+				dem = 0;
+				xoaThongTin(XOA_CB_L);
+				for (page; page < i; page++) {
+					show_1_CB(tmpCB[page], dem);
+					if (dem == MAX_PAGE - 1) {
+						break;
+					}
+					dem++;
+				}
+				dem = 0;
+				Highlight();
+				show_1_CB(tmpCB[chon], dem);
+			}
+			break;
+		case RIGHT:
+			if (page < i) {
+				Normal();
+				xoaThongTin(XOA_CB_L);
+				page++;
+				chon = page;
+				dem = 0;
+				for (page; page < i; page++) {
+					show_1_CB(tmpCB[page], dem);
+					if (dem == MAX_PAGE - 1) {
+						break;
+					}
+					dem++;
+				}
+				page += MAX_PAGE - dem;
+				dem = 0;
+				Highlight();
+				show_1_CB(tmpCB[chon], dem);
+			}
+			break;
+		case F2:
+			chonCB = THEM_CB;
+			tmp[0] = '\0';
+			strcpy(q->data.maChuyenBay, tmp);
+			return q;
+		case DELETE:
+		{
+			q = searchBin_CB(lstCB, tmpCB[chon]->maChuyenBay);
+			if (q != NULL) {
+				int chon = confirm("CO", "KHONG", false);
+				if (chon == YES) {
+					chonCB = XOA_CB;
+					Normal();
+					return q;
+				}
+				else
+					break;
+			}
+		}
+		case ESC:
+		{
+			Normal();
+			chonCB = soItem_MenuCB;
+			return NULL;
+		}
+
+		case ENTER:
+			chonCB = confirm("HIEU CHINH", "HUY CHUYEN", true);
+			if (chonCB == CANCEL) {
+				Normal();
+				break;
+			}
+
+			q = searchBin_CB(lstCB, tmpCB[chon]->maChuyenBay);
+			Normal();
+			return q;
+		}
+	} while (true);
+}
+
+
+void QLCB(PTRChuyenBay& lstCB, listMB& lstMB) {
+	int chonCB;
+	int exit2 = 1;
+	Normal();
+	system("cls");
+	PTRChuyenBay p = lstCB;
+	while (exit2)
+	{
+		chonCB = THEM_CB;
+		if (!empty_CB(lstCB))
+			p = ChonCB_Edit(lstCB, lstMB, chonCB);
+		switch (chonCB)
+		{
+		case THEM_CB:
+		{
+			CHUYENBAY cb;
+			cb = createCB(lstCB, lstMB);
+			if (cb.maChuyenBay[0] != ESC) {
+				insert_OrderNodeCB(lstCB, cb);
+				hienThongBao("Them thanh cong!");
+				int save = saveCB(lstCB);
+			}
+			else {
+				Green_Highlight();
+				hienThongBao("Da huy!");
+			}
+			Normal();
+			system("cls");
+
+			break;
+		}
+		case HIEUCHINH_CB:
+		{
+			// khong hieu chinh chuyen bay da huy hay hoan tat
+			if (checkStatus_CB(p->data)) {
+				Normal();
+				system("cls");
+				break;
+			}
+			int fix = hieuChinh_CB(lstCB, p, lstMB);
+
+			if (fix == 1)
+			{
+				Green_Highlight();
+				hienThongBao("Hieu chinh thanh cong!");
+				int save = saveCB(lstCB);
+			}
+			else if(fix == -1)
+			{
+				Red_Highlight();
+				hienThongBao("Da co khach dat ve nen khong the hieu chinh");
+			}
+			else {
+				Green_Highlight();
+				hienThongBao("Da huy!");
+			}
+			Normal();
+			system("cls");
+			break;
+		}
+		case XOA_CB:
+		{
+			// khong xoa chuyen bay da huy hay hoan tat
+			if (checkStatus_CB(p->data)) {
+				Normal();
+				system("cls");
+				break;
+			}
+			if (demSoVe(p->data.dsVe, p->data.slVe) != 0) {
+				int huy = huy_CB(lstCB, p);
+				if (huy) {
+					int save = saveCB(lstCB);
+					Green_Highlight();
+					hienThongBao("Da huy chuyen bay!");
+				}
+				Normal();
+				system("cls");
+				break;
+			}
+			int xoa = xoa_CB(lstCB, p->data.maChuyenBay);
+			if (xoa == 1) {
+				Green_Highlight();
+				hienThongBao("Xoa thanh cong!");
+				int save = saveCB(lstCB);
+			}
+			else {
+				Red_Highlight();
+				hienThongBao("Xoa that bai!");
+			}
+			Normal();
+			system("cls");
+			break;
+		}
+		case HUY_CB:
+		{
+			int huy = huy_CB(lstCB, p);
+			if (huy) {
+				int save = saveCB(lstCB);
+				Green_Highlight();
+				hienThongBao("Huy chuyen thanh cong!");
+			}
+			else {
+				Red_Highlight();
+				hienThongBao("Khong the huy chuyen bay nay hoac da bi huy truoc do!");
+			}
+			Normal();
+			system("cls");
+			break;
+		}
+		case soItem_MenuCB:
+		{
+			exit2 = 0;
+			break;
+		}
+		}
+	}
+}
+
+int checkTime_HoanTat(THOI_GIAN tg1, THOI_GIAN tg2) {
+	if (toTime(tg1) - toTime(tg2) == 0) {
+
+		if (abs(tg1.gio - tg2.gio) >= KC_GIO) {
+			if (abs(tg1.gio - tg2.gio) == KC_GIO) {
+				if (tg1.phut - tg2.phut >= 0)
+					return 1;
+				else
+					return 0;
+			}
+			return 1;
+		}
+		return 0;
+	}
+
+	// truong hop cach nhau 1 ngay (0h==24h)
+	if (toTime(tg1) - toTime(tg2) == -1) {
+
+		// truong hop chuyen bay cach nhau giua moc 0h
+		if (0 + tg1.gio <= KC_GIO && 24 - tg2.gio <= KC_GIO) {
+			if (abs(tg1.gio - tg2.gio) <= KC_GIOAM) {
+				if (abs(tg1.gio - tg2.gio) == KC_GIOAM) {
+					if (tg1.phut - tg2.phut >= 0)
+						return 1;
+					else
+						return 0;
+				}
+				return 1;
+			}
+			return 0;
+		}
+		if (24 - tg1.gio <= KC_GIO && 0 + tg2.gio <= KC_GIO) {
+			if (abs(tg1.gio - tg2.gio) >= KC_GIO) {
+				if (abs(tg1.gio - tg2.gio) == KC_GIO) {
+					if (tg1.phut - tg2.phut >= 0)
+						return 1;
+					else
+						return 0;
+				}
+				return 1;
+			}
+			return 0;
+		}
+		return 1;
+	}
+	if (toTime(tg1) - toTime(tg2) < -1) {
+		//hienThongBao("Xet dieu kien 3");
+		return 1;
+	}
+}
+
+int checkHoanTat_CB(PTRChuyenBay& lstCB) {
+	time_t baygio = time(0);
+	tm* ltm = localtime(&baygio);
+	THOI_GIAN tg;
+	tg.ngay = ltm->tm_mday;
+	tg.thang = ltm->tm_mon + 1;
+	tg.nam = ltm->tm_year + 1900;
+	tg.gio = ltm->tm_hour;
+	tg.phut = ltm->tm_min;
+
+	for (PTRChuyenBay p = lstCB; p != NULL; p = p->next) {
+
+		if (toTime(p->data.tgKhoiHanh) - toTime(tg) <= 0) {
+			if (checkTime_HoanTat(p->data.tgKhoiHanh, tg)) {
+				p->data.trangThai = HOANTAT;
+			}
+		}
+	}
+
+	return 1;
+}
+
+void insert_OrderNodeCB(PTRChuyenBay& lstCB, CHUYENBAY cb) {
+	PTRChuyenBay p, t, s;
+	p = new NodeChuyenBay;
+	p->data = cb;
+	t = new NodeChuyenBay;
+	for (s = lstCB; s != NULL && _stricmp(s->data.maChuyenBay, cb.maChuyenBay) < 0; t = s, s = s->next);
+	if (s == lstCB) {
+		p->next = lstCB;
+		lstCB = p;
+	}
+	else {
+		p->next = s;
+		t->next = p;
+	}
 }
 
 int insertNodeCB(PTRChuyenBay& lstCB, CHUYENBAY cb) {
@@ -1185,6 +1805,10 @@ ChonMayBay:
 	}
 	cb.slVe = chonMB.soCho;
 	cb.dsVe = new string[cb.slVe];
+	for (int i = 0; i < cb.slVe; i++)
+	{
+		cb.dsVe[i] = "";
+	}
 	cb.trangThai = CONVE;
 
 	return cb;
@@ -1245,6 +1869,9 @@ int hieuChinh_CB(PTRChuyenBay& lstCB, PTRChuyenBay p, listMB lstMB) {
 	{
 		return 0;
 	}
+	if (checkBooked(p->data.dsVe, p->data.slVe)) {
+		return -1;
+	}
 	mayBay mbCu = getMB(lstMB, p->data.soHieuMayBay);
 	gotoxy(COT + 1, DONGNHAP1 + 2);
 
@@ -1256,7 +1883,7 @@ int hieuChinh_CB(PTRChuyenBay& lstCB, PTRChuyenBay p, listMB lstMB) {
 	strcpy(cb.sanBayDen, p->data.sanBayDen);
 	cb.trangThai = p->data.trangThai;
 
-	//ChonMayBay:
+//ChonMayBay:
 	do {
 		do
 		{
@@ -1280,9 +1907,8 @@ int hieuChinh_CB(PTRChuyenBay& lstCB, PTRChuyenBay p, listMB lstMB) {
 				}
 				else {
 					if (!checkSoCho(mbCu, chonMB)) {
-						delete[] cb.dsVe;
-						cb.dsVe = new string[chonMB.soCho];
 						cb.slVe = chonMB.soCho;
+						cb.dsVe = new string[cb.slVe];
 						for (int i = 0; i < cb.slVe; i++) {
 							cb.dsVe[i] = "";
 						}
@@ -1291,6 +1917,18 @@ int hieuChinh_CB(PTRChuyenBay& lstCB, PTRChuyenBay p, listMB lstMB) {
 
 				}
 
+			}
+			else {
+				if (!checkSoCho(mbCu, chonMB)) {
+					gotoxy(COT + 1, DONGNHAP2 + 2);
+					cout << cb.soHieuMayBay;
+					cb.slVe = chonMB.soCho;
+					cb.dsVe = new string[cb.slVe];
+					for (int i = 0; i < cb.slVe; i++) {
+						cb.dsVe[i] = "";
+					}
+					break;
+				}
 			}
 
 		} while (true);
@@ -2302,7 +2940,7 @@ void DatHuyVe(PTRChuyenBay& lstCB, listMB lstMB, TREEHanhKhach& lstHK) {
 			Green_Highlight();
 			hienThongBao("Dat ve thanh cong!");
 			int savehk = saveHK(lstHK);
-			//int savecb = saveCB(lstCB);
+			int savecb = saveCB(lstCB);
 			break;
 		}
 		case HUYVE:
@@ -2320,7 +2958,7 @@ void DatHuyVe(PTRChuyenBay& lstCB, listMB lstMB, TREEHanhKhach& lstHK) {
 					}
 					Green_Highlight();
 					hienThongBao("Huy ve thanh cong!");
-					//int save = saveCB(lstCB);
+					int save = saveCB(lstCB);
 				}
 
 			}
@@ -3451,7 +4089,7 @@ int confirm(string chose1, string chose2, bool huyCB) {
 
 //=============Giao dien menu=============
 mayBay ChonMB_LapCB(listMB list) {
-	//xoaKhungDS();
+	xoaKhungDS();
 	mayBay tmp;
 	Normal();
 	int page = MAX_PAGE - 1;
@@ -3460,7 +4098,7 @@ mayBay ChonMB_LapCB(listMB list) {
 	int dem = 0;
 	int chon = 0;
 	int i;
-	showListMB(list);
+	showListMB(list, 0);
 	Highlight();
 	showMotMB(list, chon, false, dem);
 	char kytu;
@@ -3498,7 +4136,7 @@ mayBay ChonMB_LapCB(listMB list) {
 					page -= MAX_PAGE * 2;
 					chon = page;
 					dem = 0;
-					//xoaThongTin(XOA_MB);
+					xoaThongTin(XOA_MB);
 					for (page; page < list.n; page++) {
 						showMotMB(list, page, true, dem);
 						if (dem == MAX_PAGE - 1) {
@@ -3515,7 +4153,7 @@ mayBay ChonMB_LapCB(listMB list) {
 			case RIGHT:
 				if (page < list.n) {
 					Normal();
-					//xoaThongTin(XOA_MB);
+					xoaThongTin(XOA_MB);
 					page++;
 					chon = page;
 					dem = 0;

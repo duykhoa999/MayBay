@@ -129,6 +129,7 @@ char* gdTimMa(int type, string title);
 int menuDong_Prim(char td[soItem_MenuChinh][100]);
 
 //===========May bay===========
+void QLMB(listMB& lstMB, PTRChuyenBay lstCB);
 int checkEmptyMB(listMB list);
 int checkFullMB(listMB list);
 int searchMB(listMB list, char maMB[]);
@@ -136,7 +137,7 @@ int insertMB(listMB& list, mayBay mb);
 mayBay themMB(listMB &list);
 void xuat(mayBay mb);
 void showMotMB(listMB list, int chon, bool type, int dem);
-void showListMB(listMB list);
+void showListMB(listMB list, int page);
 int checkMB_DaBay(mayBay mb, PTRChuyenBay lstCB);
 int delete_MB(listMB& listMB, int i, PTRChuyenBay lstCB);
 int hieuChinh_MB(listMB& listMB, int i);
@@ -146,10 +147,14 @@ int toTime(THOI_GIAN tg);
 int checkKC_5Gio(THOI_GIAN tg1, THOI_GIAN tg2);
 
 //================Chuyen bay=============
+void QLCB(PTRChuyenBay& lstCB, listMB& lstMB);
+PTRChuyenBay ChonCB_Edit(PTRChuyenBay lstCB, listMB lstMB, int& chonCB);
+void showCB(PTRChuyenBay lstCB);
 void initCB(PTRChuyenBay& lstCB);
 int empty_CB(PTRChuyenBay lstCB);
 PTRChuyenBay searchMaCB(PTRChuyenBay lstCB, char ma[]);
 int insertNodeCB(PTRChuyenBay& lstCB, CHUYENBAY cb);
+void insert_OrderNodeCB(PTRChuyenBay& lstCB, CHUYENBAY cb);
 CHUYENBAY createCB(PTRChuyenBay lstCB, listMB list);
 int huy_CB(PTRChuyenBay& lstCB, PTRChuyenBay p);
 int xoa_CB(PTRChuyenBay& lstCB, char ma[]);
@@ -160,6 +165,8 @@ int checkStatus_CB(CHUYENBAY cb);
 int checkTimeHienTai(THOI_GIAN tg);
 void show_1_CB(CHUYENBAY* cb, int chon);
 PTRChuyenBay searchBin_CB(PTRChuyenBay lstCB, char ma[]);
+int checkHoanTat_CB(PTRChuyenBay& lstCB);
+int checkTime_HoanTat(THOI_GIAN tg1, THOI_GIAN tg2);
 
 //=================Doc ghi file==============
 int loadMB(listMB& list);
