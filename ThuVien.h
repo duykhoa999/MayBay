@@ -95,7 +95,7 @@ struct NhapChuoi {
 };
 
 //======Hang so GD======
-const int soItem_MenuChinh = 7;
+const int soItem_MenuChinh = 6;
 const int soItem_MenuMB = 4;
 const int soItem_MenuCB = 5;
 const int soItem_MenuDV = 3;
@@ -234,3 +234,5 @@ void xuatALL_HK_1_CB(CHUYENBAY* cb, TREEHanhKhach lstHK);
 void dsVeTrong_1_CB(PTRChuyenBay lstCB, listMB lstMB);
 PTRChuyenBay ChonCB_XemVeTrong(PTRChuyenBay lstCB, listMB lstMB, int& chonCB);
 void show_VeTrong(PTRChuyenBay p);
+void quickSortTK(int* soLuot, nodeMayBay tempMB, int q, int r);
+void thongKeCB(PTRChuyenBay lstCB, listMB lstMB);

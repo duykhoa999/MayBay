@@ -266,10 +266,8 @@ void khungXuatDS(int type, int rong, int dai, int colump1, int colump2, int colu
 		cout << "STT";
 		gotoxy(COTDS_L + 6, DONGDS_U + 1);
 		cout << "SO HIEU MAY BAY";
-		gotoxy(COTDS_L + 26, DONGDS_U + 1);
-		cout << "LOAI MAY BAY";
-		gotoxy(COTDS_L + 71, DONGDS_U + 1);
-		cout << "SO LUOT THUC HIEN BAY";
+		gotoxy(COTDS_L + 46, DONGDS_U + 1);
+		cout << "SO LUOT THUC HIEN CHUYEN BAY";
 	}
 }
 
@@ -4613,4 +4611,96 @@ void dsVeTrong_1_CB(PTRChuyenBay lstCB, listMB lstMB) {
 			break;
 		}
 	}
+}
+
+//dung quicksort de sort so luot thuc hien
+void quickSortTK(int* soLuot, nodeMayBay tempMB, int q, int r) {
+	int i, j;
+	i = q;
+	j = r;
+	int x = soLuot[(q + r) / 2];
+	int tam;
+	mayBay temp;
+	do
+	{
+		while (soLuot[i] > x)
+		{
+			i++;
+		}
+		while (soLuot[j] < x)
+		{
+			j--;
+		}
+		if (i <= j)
+		{
+			tam = soLuot[i];
+			soLuot[i] = soLuot[j];
+			soLuot[j] = tam;
+
+			//temp = tempMB[i]
+			strcpy_s(temp.soHieuMayBay, tempMB[i].soHieuMayBay);
+			strcpy_s(temp.loaiMayBay, tempMB[i].loaiMayBay);
+			temp.soCho = tempMB[i].soCho;
+			//tempMB[i] = tempMB[j]
+			tempMB[i] = tempMB[j];
+			//tempMB[j] = temp
+			strcpy_s(tempMB[j].soHieuMayBay, temp.soHieuMayBay);
+			strcpy_s(tempMB[j].loaiMayBay, temp.loaiMayBay);
+			tempMB[j].soCho = temp.soCho;
+
+			i++;
+			j--;
+		}
+	} while (i <= j);
+
+	if (q < j)
+	{
+		quickSortTK(soLuot, tempMB, q, j);
+	}
+
+	if (i < r)
+	{
+		quickSortTK(soLuot, tempMB, i, r);
+	}
+}
+//thong ke so luot thuc hien
+void thongKeCB(PTRChuyenBay lstCB, listMB lstMB) {
+	int* soLuot = new int[lstMB.n]; // mang luu so luot thuc hien
+	nodeMayBay tempMB = new mayBay[lstMB.n]; // mang luu thong tin cua may bay
+	int dem;
+	for (int i = 0; i < lstMB.n; i++)
+	{
+		dem = 0;
+		for (PTRChuyenBay p = lstCB; p != NULL; p = p->next)
+		{
+			if (strcmp(p->data.soHieuMayBay, lstMB.MB[i]->soHieuMayBay) == 0)
+			{
+				dem++;//so luong thuc hien cua may bay
+			}
+		}
+		soLuot[i] = dem;
+		tempMB[i] = getMB(lstMB, lstMB.MB[i]->soHieuMayBay);
+		//tempMB[i] = lstMB.MB[i];
+	}
+	quickSortTK(soLuot, tempMB, 0, lstMB.n - 1);
+	Normal();
+	xoaKhungDS();
+	khungXuatDS(THONG_KE, DONGDS_D - DONGDS_U, COTDS_R - COTDS_L, 5, 45);
+
+	for (int i = 0; i < lstMB.n; i++) {
+		//5, 25, 70, 93
+		gotoxy(COTDS_L + 1, DONGDS_U + 3 + i);
+		cout << i + 1;
+		gotoxy(COTDS_L + 6, DONGDS_U + 3 + i);
+		cout << tempMB[i].soHieuMayBay;
+		gotoxy(COTDS_L + 46, DONGDS_U + 3 + i);
+		cout << soLuot[i];
+	}
+	char key;
+	do
+	{
+		key = _getch();
+		if (key == ESC)
+			return;
+	} while (true);
 }

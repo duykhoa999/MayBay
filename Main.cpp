@@ -9,9 +9,8 @@ char tdChinh[soItem_MenuChinh][100] = { "1. Quan ly may bay                     
 										 "2. Quan ly chuyen bay                                 ",
 										 "3. Dat ve/Huy ve                                      ",
 										 "4. Danh sach hanh khach thuoc 1 chuyen bay            " ,
-										 "5. Danh sach cac chuyen bay khoi hanh trong dd/mm/yyyy",
-										 "6. Danh sach ve con trong cua chuyen bay X            ",
-										 "7. Thong ke so luot thuc hien chuyen bay"
+										 "5. Danh sach ve con trong cua chuyen bay X            ",
+										 "6. Thong ke so luot thuc hien chuyen bay"
 };
 
 using namespace std;
@@ -29,64 +28,6 @@ int main(int argc, char** argv) {
 	int loadmb = loadMB(listMB);
 	int loadcb = loadCB(listCB, listMB);
 	int loadhk = loadHK(listHK);
-
-	//int checkLoadFileCB = loadCB(listCB, list);
-	//if (checkLoadFileCB == 1)
-	//	hienThongBao("Doc file thanh cong");
-	//else hienThongBao("Doc file that bai");
-
-	/*strcpy_s(mb.soHieuMayBay, "VN01");
-	strcpy_s(mb.loaiMayBay, "Boeing");
-	mb.soCho = 20;
-	mb.soLuotThucHien = 0;
-	insertMB(listMB, mb);
-
-	strcpy_s(mb.soHieuMayBay, "VN02");
-	strcpy_s(mb.loaiMayBay, "Airbus");
-	mb.soCho = 25;
-	mb.soLuotThucHien = 0;
-	insertMB(listMB, mb);*/
-
-	//strcpy_s(mb.soHieuMayBay, "VN03");
-	//strcpy_s(mb.loaiMayBay, "Airbus");
-	//mb.soCho = 17;
-	//mb.soLuotThucHien = 0;
-	//insertMB(listMB, mb);
-
-
-	/*strcpy_s(cb.maChuyenBay, "CB01");
-	strcpy_s(cb.soHieuMayBay, listMB.MB[0]->soHieuMayBay);
-	strcpy_s(cb.sanBayDen, "Ho Chi Minh");
-	cb.tgKhoiHanh.ngay = 20;
-	cb.tgKhoiHanh.thang = 1;
-	cb.tgKhoiHanh.nam = 2020;
-	cb.tgKhoiHanh.gio = 5;
-	cb.tgKhoiHanh.phut = 30;
-	cb.trangThai = 1;
-	cb.slVe = listMB.MB[0]->soCho;
-	cb.dsVe = new string[cb.slVe];
-	for (int i = 0; i < cb.slVe; i++) {
-		cb.dsVe[i] = "";
-	}
-	insertNodeCB(listCB, cb);
-
-	strcpy_s(cb.maChuyenBay, "CB02");
-	strcpy_s(cb.soHieuMayBay, listMB.MB[1]->soHieuMayBay);
-	strcpy_s(cb.sanBayDen, "Da Nang");
-	cb.tgKhoiHanh.ngay = 20;
-	cb.tgKhoiHanh.thang = 1;
-	cb.tgKhoiHanh.nam = 2020;
-	cb.tgKhoiHanh.gio = 5;
-	cb.tgKhoiHanh.phut = 30;
-	cb.trangThai = 1;
-	cb.slVe = listMB.MB[1]->soCho;
-	cb.dsVe = new string[cb.slVe];
-	for (int i = 0; i < cb.slVe; i++) {
-		cb.dsVe[i] = "";
-	}
-	insertNodeCB(listCB, cb);*/
-
-
 
 	fullScreen();
 	int exit = 1;
@@ -117,9 +58,14 @@ int main(int argc, char** argv) {
 			dsHK_1_CB(listCB, listHK, listMB);
 			break;
 		}
-		case 6:
+		case 5:
 		{
 			dsVeTrong_1_CB(listCB, listMB);
+			break;
+		}
+		case 6:
+		{
+			thongKeCB(listCB, listMB);
 			break;
 		}
 		case 0:

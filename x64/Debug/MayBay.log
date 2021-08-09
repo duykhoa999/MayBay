@@ -8,28 +8,33 @@ D:\Study\CTDL\MayBay\mylib.h(91,1): warning C4005: 'XOA_CB': macro redefinition
 D:\Study\CTDL\MayBay\mylib.h(74): message : see previous definition of 'XOA_CB'
 D:\Study\CTDL\MayBay\mylib.h(92,1): warning C4005: 'XOA_HK': macro redefinition
 D:\Study\CTDL\MayBay\mylib.h(79): message : see previous definition of 'XOA_HK'
-D:\Study\CTDL\MayBay\Ham.cpp(352,27): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-D:\Study\CTDL\MayBay\Ham.cpp(383,40): warning C4244: 'argument': conversion from 'double' to 'short', possible loss of data
-D:\Study\CTDL\MayBay\Ham.cpp(424,6): warning C4101: 'i': unreferenced local variable
-D:\Study\CTDL\MayBay\Ham.cpp(510,6): warning C4101: 'i': unreferenced local variable
-D:\Study\CTDL\MayBay\Ham.cpp(1125,6): warning C4101: 'slCB': unreferenced local variable
-D:\Study\CTDL\MayBay\Ham.cpp(1173,12): warning C4101: 'cb': unreferenced local variable
-D:\Study\CTDL\MayBay\Ham.cpp(3405,22): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
-D:\Study\CTDL\MayBay\Ham.cpp(3462,22): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
-D:\Study\CTDL\MayBay\Ham.cpp(3519,22): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
-D:\Study\CTDL\MayBay\Ham.cpp(3576,22): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
-D:\Study\CTDL\MayBay\Ham.cpp(3631,22): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
-D:\Study\CTDL\MayBay\Ham.cpp(3686,22): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
-D:\Study\CTDL\MayBay\Ham.cpp(4005,26): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-D:\Study\CTDL\MayBay\Ham.cpp(4085,6): warning C4101: 'i': unreferenced local variable
+D:\Study\CTDL\MayBay\Ham.cpp(350,27): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+D:\Study\CTDL\MayBay\Ham.cpp(381,40): warning C4244: 'argument': conversion from 'double' to 'short', possible loss of data
+D:\Study\CTDL\MayBay\Ham.cpp(422,6): warning C4101: 'i': unreferenced local variable
+D:\Study\CTDL\MayBay\Ham.cpp(508,6): warning C4101: 'i': unreferenced local variable
+D:\Study\CTDL\MayBay\Ham.cpp(1123,6): warning C4101: 'slCB': unreferenced local variable
+D:\Study\CTDL\MayBay\Ham.cpp(1171,12): warning C4101: 'cb': unreferenced local variable
+D:\Study\CTDL\MayBay\Ham.cpp(3403,22): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+D:\Study\CTDL\MayBay\Ham.cpp(3460,22): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+D:\Study\CTDL\MayBay\Ham.cpp(3517,22): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+D:\Study\CTDL\MayBay\Ham.cpp(3574,22): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+D:\Study\CTDL\MayBay\Ham.cpp(3629,22): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+D:\Study\CTDL\MayBay\Ham.cpp(3684,22): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+D:\Study\CTDL\MayBay\Ham.cpp(4003,26): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+D:\Study\CTDL\MayBay\Ham.cpp(4083,6): warning C4101: 'i': unreferenced local variable
+  Main.cpp
+D:\Study\CTDL\MayBay\ThuVien.h(72,2): warning C4091: 'typedef ': ignored on left of 'NodeChuyenBay' when no variable is declared
+D:\Study\CTDL\MayBay\Main.cpp(24,12): warning C4101: 'cb': unreferenced local variable
+D:\Study\CTDL\MayBay\Main.cpp(20,9): warning C4101: 'mb': unreferenced local variable
+  Generating Code...
 D:\Study\CTDL\MayBay\mylib.h(118): warning C4172: returning address of local variable or temporary: S
-D:\Study\CTDL\MayBay\Ham.cpp(473): warning C4172: returning address of local variable or temporary: temp
-D:\Study\CTDL\MayBay\Ham.cpp(903): warning C4715: 'checkMB_DaBay': not all control paths return a value
-D:\Study\CTDL\MayBay\Ham.cpp(1621): warning C4715: 'checkTime_HoanTat': not all control paths return a value
-D:\Study\CTDL\MayBay\Ham.cpp(2849): warning C4715: 'checkVeCungTime': not all control paths return a value
-D:\Study\CTDL\MayBay\Ham.cpp(3041): warning C4715: 'timTrung_HK': not all control paths return a value
-D:\Study\CTDL\MayBay\Ham.cpp(3210): warning C4172: returning address of local variable or temporary: info
-D:\Study\CTDL\MayBay\Ham.cpp(3216): warning C4172: returning address of local variable or temporary: info
-D:\Study\CTDL\MayBay\Ham.cpp(3753): warning C4172: returning address of local variable or temporary: info
-D:\Study\CTDL\MayBay\Ham.cpp(3759): warning C4172: returning address of local variable or temporary: info
+D:\Study\CTDL\MayBay\Ham.cpp(471): warning C4172: returning address of local variable or temporary: temp
+D:\Study\CTDL\MayBay\Ham.cpp(901): warning C4715: 'checkMB_DaBay': not all control paths return a value
+D:\Study\CTDL\MayBay\Ham.cpp(1619): warning C4715: 'checkTime_HoanTat': not all control paths return a value
+D:\Study\CTDL\MayBay\Ham.cpp(2847): warning C4715: 'checkVeCungTime': not all control paths return a value
+D:\Study\CTDL\MayBay\Ham.cpp(3039): warning C4715: 'timTrung_HK': not all control paths return a value
+D:\Study\CTDL\MayBay\Ham.cpp(3208): warning C4172: returning address of local variable or temporary: info
+D:\Study\CTDL\MayBay\Ham.cpp(3214): warning C4172: returning address of local variable or temporary: info
+D:\Study\CTDL\MayBay\Ham.cpp(3751): warning C4172: returning address of local variable or temporary: info
+D:\Study\CTDL\MayBay\Ham.cpp(3757): warning C4172: returning address of local variable or temporary: info
   MayBay.vcxproj -> D:\Study\CTDL\MayBay\x64\Debug\MayBay.exe
