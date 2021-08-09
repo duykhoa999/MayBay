@@ -763,7 +763,7 @@ mayBay getMB(listMB list, char ma[]) {
 int insertMB(listMB& list, mayBay mb) {
 	if (checkFullMB(list)) return 0;
 	nodeMayBay p = new mayBay;
-	p = &mb;
+	*p = mb;
 	list.MB[list.n++] = p;
 	return 1;
 }
@@ -775,7 +775,7 @@ mayBay themMB(listMB &list){
 		strcpy_s(mb.soHieuMayBay, CheckInputStr(true, DONGNHAP1));
 		// kiem tra so hieu may bay da co chua
 		int tontai = searchMB(list, mb.soHieuMayBay);
-		if (tontai == 1) {
+		if (tontai != -1) {
 			Red_Highlight();
 			hienThongBao("So hieu may bay da ton tai, nhap lai!");
 		}
