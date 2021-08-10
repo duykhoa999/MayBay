@@ -286,12 +286,10 @@ void hienHuongDan(int type) {
 		gotoxy(COT, DONG);
 		cout << "F2: Them";
 		gotoxy(COT, DONG + 1);
-		cout << "F3: Tim";
-		gotoxy(COT, DONG + 2);
 		cout << "ENTER: Chon";
-		gotoxy(COT, DONG + 3);
+		gotoxy(COT, DONG + 2);
 		cout << "DELETE: Xoa";
-		gotoxy(COT, DONG + 4);
+		gotoxy(COT, DONG + 3);
 		cout << "ESC: Huy/Tro ve";
 	}
 
@@ -1877,16 +1875,14 @@ int hieuChinh_CB(PTRChuyenBay& lstCB, PTRChuyenBay p, listMB lstMB) {
 			// tim may bay bang cach nhap
 			if (chonMB.soHieuMayBay[0] == '\0') {
 				strcpy(cb.soHieuMayBay, CheckInputStr(true, DONGNHAP2));
-
+				if (cb.soHieuMayBay[0] == ESC) {
+					return 0;
+				}
 				chonMB = getMB(lstMB, cb.soHieuMayBay);
 				if (chonMB.soHieuMayBay[0] == '\0') {
 					Red_Highlight();
 					hienThongBao("Khong co may bay nao mang so hieu nay!");
 					continue;
-				}
-				else if (cb.soHieuMayBay[0] == ESC) {
-					cb.maChuyenBay[0] = ESC;
-					return 0;
 				}
 				else {
 					if (!checkSoCho(mbCu, chonMB)) {
@@ -1971,7 +1967,7 @@ int hieuChinh_CB(PTRChuyenBay& lstCB, PTRChuyenBay p, listMB lstMB) {
 		} while (true);
 
 		// xet gio lap chuyen bay 
-		if (checkTime_LapCB(cb, lstCB)) {
+		if (checkTime_LapCB(cb, lstCB) && _stricmp(cb.soHieuMayBay, mbCu.soHieuMayBay) != 0) {
 			Red_Highlight();
 			hienThongBao("May bay nay phai cat canh sau 5h nua! Hay chon may bay khac");
 			//goto ChonMayBay;
@@ -2484,28 +2480,6 @@ PTRChuyenBay ChonCB_DatVe_HuyVe(PTRChuyenBay lstCB, int& chonCB, listMB lstMB) {
 			}
 			break;
 		}
-		case F3:
-		{
-			tmp[0] = '\0';
-			do
-			{
-				strcpy(tmp, gdTimMa(TIM_MA, "TIM CHUYEN BAY"));
-				if (tmp[0] == ESC) {
-					return NULL;
-				}
-				q = searchBin_CB(lstCB, tmp);
-				if (q == NULL) {
-					Red_Highlight();
-					hienThongBao("Khong tim thay chuyen bay nay!");
-				}
-				else break;
-			} while (true);
-			chonCB = confirm("DAT VE", "TRO VE", false);
-			if (chonCB == CANCEL)
-				break;
-			Normal();
-			return q;
-		}
 		case ESC:
 		{
 			Normal();
@@ -2693,24 +2667,17 @@ int chonVe_HUY(PTRChuyenBay& lstCB, HANHKHACH hk) {
 		Normal();
 		dong++;
 		n++;
-		if (dong == 5) {
+		if (dong == SODONG) {
 			dong = 0;
 			cot++;
 			kc += 3;
 		}
 	}
-	/*for (int i = 0; i < 4; i++) {
-		for (int j = 0; j < 5; j++) {
-			if (lstCB->data.dsVe[n] != "")
-				Red_Highlight();
-			show_1_Ve(tempSoVe, i, j, n, kc);
-			Normal();
-			n++;
-		}
-		kc += 3;
-	}*/
-	int soDong = 5;
+	int soDong = SODONG;
 	int soCot = cot;
+	if (lstCB->data.slVe % soDong != 0) {
+		soCot++;
+	}
 	cot = 0;
 	dong = 0;
 	kc = 3;
@@ -2751,8 +2718,10 @@ int chonVe_HUY(PTRChuyenBay& lstCB, HANHKHACH hk) {
 					Red_Highlight();
 				}
 				show_1_Ve(tempSoVe, cot, dong, chon, kc);
-				chon++;
-				dong++;
+				if (chon < lstCB->data.slVe - 1) {
+					chon++;
+					dong++;
+				}
 				Highlight();
 				show_1_Ve(tempSoVe, cot, dong, chon, kc);
 			}
@@ -2782,9 +2751,12 @@ int chonVe_HUY(PTRChuyenBay& lstCB, HANHKHACH hk) {
 					Red_Highlight();
 				}
 				show_1_Ve(tempSoVe, cot, dong, chon, kc);
-				chon += SODONG;
-				cot++;
-				kc += 3;
+				if ((chon + SODONG) < lstCB->data.slVe)
+				{
+					chon += SODONG;
+					cot++;
+					kc += 3;
+				}
 				Highlight();
 				show_1_Ve(tempSoVe, cot, dong, chon, kc);
 			}
@@ -3120,8 +3092,8 @@ HANHKHACH create_HK(TREEHanhKhach& lstHK, PTRChuyenBay& lstCB) {
 				if (hieuChinh) {
 					Green_Highlight();
 					hienThongBao("Sua thong tin thanh cong!");
-					/*int savehk = saveHK(lstHK);
-					int savecb = saveCB(lstCB);*/
+					int savehk = saveHK(lstHK);
+					int savecb = saveCB(lstCB);
 					int datVe = confirm("DAT VE", "TRO VE", false);
 					if (datVe == YES) {
 						return tmp->data;
@@ -3344,8 +3316,7 @@ void NhapCHUOI_SO(char var[], int len) {
 	while (true) {
 		if (_kbhit()) {
 			char c = _getch();
-			if (!(!((int)c >= 65 && (int)c <= 90) && !((int)c >= 97 && (int)c <= 122)
-				&& !((int)c >= 48 && (int)c <= 57) && c != ' ') && nhap.n < maxInput) {
+			if (!(!((int)c >= So0 && (int)c <= So9) && c != ' ') && nhap.n < maxInput) {
 				if (nhap.n > 0 && *nhap.data[nhap.n - 1] == ' ' && c == ' ')
 					continue;
 				if (!(nhap.n == 0 && c == ' ')) {
@@ -4518,23 +4489,6 @@ PTRChuyenBay ChonCB_XemVeTrong(PTRChuyenBay lstCB, listMB lstMB, int& chonCB) {
 				show_1_CB(tmpCB[chon], dem);
 			}
 			break;
-		case F3:
-		{
-			tmp[0] = '\0';
-			do
-			{
-				strcpy(tmp, gdTimMa(0, "TIM CHUYEN BAY"));
-				q = searchBin_CB(lstCB, tmp);
-				if (q == NULL) {
-					Red_Highlight();
-					hienThongBao("Khong tim thay chuyen bay nay!");
-				}
-				else break;
-			} while (true);
-
-			Normal();
-			return q;
-		}
 		case ESC:
 		{
 			Normal();
