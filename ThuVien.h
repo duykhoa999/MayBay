@@ -3,7 +3,7 @@
 #include <iostream>
 #include <string>
 
-#define MAX_SOCHO 20
+#define MIN_SOCHO 20
 #define MAX_INPUT 255
 #define MAXLIST 300
 #define MAX_PAGE 35
@@ -131,7 +131,6 @@ int checkFullMB(listMB list);
 int searchMB(listMB list, char maMB[]);
 int insertMB(listMB& list, mayBay mb);
 mayBay themMB(listMB &list);
-void xuat(mayBay mb);
 void showMotMB(listMB list, int chon, bool type, int dem);
 void showListMB(listMB list, int page);
 int checkMB_DaBay(mayBay mb, PTRChuyenBay lstCB);
@@ -160,7 +159,7 @@ int hieuChinh_CB(PTRChuyenBay& lstCB, PTRChuyenBay p, listMB lstMB);
 int checkStatus_CB(CHUYENBAY cb);
 int checkTimeHienTai(THOI_GIAN tg);
 void show_1_CB(CHUYENBAY* cb, int chon);
-PTRChuyenBay searchBin_CB(PTRChuyenBay lstCB, char ma[]);
+PTRChuyenBay search_CB(PTRChuyenBay lstCB, char ma[]);
 int checkHoanTat_CB(PTRChuyenBay& lstCB);
 int checkTime_HoanTat(THOI_GIAN tg1, THOI_GIAN tg2);
 

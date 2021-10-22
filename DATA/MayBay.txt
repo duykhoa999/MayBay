@@ -17,3 +17,6 @@ Airbus
 VN06
 Boeing
 50
+VN07
+Bamboo
+20
